@@ -1,3 +1,6 @@
 from django.contrib import admin
+from api.models import Receipt, Product, OrderInfo
 
-# Register your models here.
+admin.site.register(Receipt)
+admin.site.register(Product)
+admin.site.register(OrderInfo)
