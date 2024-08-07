@@ -1,0 +1,17 @@
+.Body{
+    background-color: rgba(15, 68, 47, 0.10);
+    width: 100%;
+    height: 91vh;
+}
+
+.CardsContainers{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 50px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
