@@ -6,9 +6,9 @@ const Navbar = () => {
     <header className="header">
       <nav className="navbar">
         <div className="logoContainer">
-          <span className="logoText">
+          <a href="/" className="logoText">
             Receiptify
-          </span>
+          </a>
         </div>
 
         <div className="navLinks">
