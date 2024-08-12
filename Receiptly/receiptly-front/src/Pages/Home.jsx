@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
-import {getReceipt} from '../Api/api.js';
+import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
 
 const Home = () => {
 
   const [activeCard, setActiveCard] = useState(false);
-  const [data, setdata] = useState(null);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const getData = async() => {
       const data = await getReceipt();
       console.log(data)
     }
 
     getData();
-  } , [])
+  } , []) */
 
   const CardCallback = (value) => {
     setActiveCard(value);
@@ -35,22 +34,7 @@ const Home = () => {
 
           {activeCard &&
             <div className='bodyOverlay'>
-              <div className="addCard">
-                <div className="addCardHeader">
-                  <div className="addCardTitle">
-                    <h3>Add New Receipt</h3>
-                  </div>
-                  <div className="addCardClose" onClick={() => CardCallback(false)}>
-                    close
-                  </div>
-                </div>
-
-                <div className="addCardContent">
-                  <div className="inputSection"></div>
-                  <div className="ProductsSection"></div>
-                </div>
-              </div>
-
+              <NewReceiptCard setActiveCard={setActiveCard} />
             </div>}
         </div>
       </div>
