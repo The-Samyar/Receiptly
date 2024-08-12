@@ -7,14 +7,14 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="logoContainer">
           <a href="/" className="logoText">
-            Receiptify
+            Receiptly
           </a>
         </div>
 
         <div className="navLinks">
             <div className="navLinksContainer">
               <a href="#" className="navLinkSpecial">New Receipt</a>
-              <a href="/currentRecepits" className="navLink">Current Receipt</a>
+              <a href="/currentRecepits" className="navLink">Your Receipts</a>
               <a href="/yourProducts" className="navLink">Your Products</a>
               <a href="/history" className="navLink">History</a>
             </div>

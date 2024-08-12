@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
+import {getReceipt} from '../Api/api.js';
 
 const Home = () => {
 
   const [activeCard, setActiveCard] = useState(false);
+  const [data, setdata] = useState(null);
+
+  useEffect(() => {
+    const getData = async() => {
+      const data = await getReceipt();
+      console.log(data)
+    }
+
+    getData();
+  } , [])
 
   const CardCallback = (value) => {
     setActiveCard(value);
