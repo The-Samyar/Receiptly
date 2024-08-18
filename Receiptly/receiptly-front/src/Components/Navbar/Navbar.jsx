@@ -12,18 +12,17 @@ const Navbar = () => {
         </div>
 
         <div className="navLinks">
-            <div className="navLinksContainer">
-              <a href="#" className="navLinkSpecial">New Receipt</a>
-              <a href="/currentRecepits" className="navLink">Your Receipts</a>
-              <a href="/yourProducts" className="navLink">Your Products</a>
-              <a href="/history" className="navLink">History</a>
-            </div>
+          <div className="navLinksContainer">
+            <a href="#" className="navLinkSpecial">New Receipt</a>
+            <a href="/currentRecepits" className="navLink">Your Receipts</a>
+            <a href="/yourProducts" className="navLink">Your Products</a>
+            <a href="/history" className="navLink">History</a>
+          </div>
         </div>
 
         <div className="profileContainer">
-          <div className="profile">
-            <img src={IMG} alt="CustomerImg" className="profileImg" />
-          </div>
+          <button className="SignUp">Sign Up</button>
+          <button className="SignIn">Sign In</button>
         </div>
       </nav>
     </header>

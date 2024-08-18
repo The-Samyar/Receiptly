@@ -1,19 +1,21 @@
 import './ReceiptCard.css'
 
-const ReceiptCard = ({CardCallBack}) => {
+const ReceiptCard = ({CardCallBack , Receipt}) => {
 
   const handleClick = () => {
-    CardCallBack(true)
+    CardCallBack(Receipt.id)
   }
+
+  /* console.log(Receipt) */
 
   return (
     <div className="ReceiptCardContainer">
         <div className="ReceiptCardHeader">
             <div className="ReceiptCardTitle">
-                <h2 className="ReceiptCardHeader">Sam Steel</h2>
-                <span className="ReceiptCardDetail">Deadline: June 2, 2024</span> 
+                <h2 className="ReceiptCardHeader">{Receipt.title}</h2>
+                <span className="ReceiptCardDetail">Deadline: {Receipt.deadline_date}</span> 
                 <br />
-                <span className="ReceiptCardDetail">Customer: Mamad</span>
+                <span className="ReceiptCardDetail">Customer: {Receipt.customer_name}</span>
             </div>
 
             <div className="ReceiptCardAction">
@@ -22,9 +24,13 @@ const ReceiptCard = ({CardCallBack}) => {
         </div>
 
         <div className="ReceiptCardTags">
-          <div className="ReceiptCardTag">Dashboard</div>
+          {/* <div className="ReceiptCardTag">Dashboard</div>
           <div className="ReceiptCardTag">Payment Panel</div>
-          <div className="ReceiptCardTag">Admin Panel</div>
+          <div className="ReceiptCardTag">Admin Panel</div> */}
+
+          {Receipt.products[0] !== null && Receipt?.products.map(product => (
+            <div className="ReceiptCardTag">{product?.title}</div>
+          ))}
         </div>
     </div>
   )

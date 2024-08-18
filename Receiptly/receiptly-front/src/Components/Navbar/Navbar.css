@@ -72,17 +72,27 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.profile{
-    width: 40px;
-    height: 40px;
     /* border: 1px solid red; */
-    border-radius: 50px;
 }
 
-.profileImg{
-    width: 100%;
-    height: 100%;
-    border-radius: 50px;
+.SignUp {
+    border: none;
+    background-color: #7acccc;
+    color: rgba(0,0,0,0.7);
+    padding: 8px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.SignIn{
+    border: none;
+    background-color:  rgba(0,0,0,0.5);
+    color: #7acccc;
+    padding: 8px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: bold;
 }

@@ -1,23 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
 import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
+import { getReceipt } from '../Api/api.js';
 
 const Home = () => {
 
   const [activeCard, setActiveCard] = useState(false);
+  const [Receipts, setReceipts] = useState(null);
 
-/*   useEffect(() => {
+  useEffect(() => {
     const getData = async() => {
-      const data = await getReceipt();
-      console.log(data)
+      const {data} = await getReceipt();
+      /* console.log(data) */
+
+      setReceipts(data);
     }
 
     getData();
-  } , []) */
+  } , [])
+
+/*   console.log(Receipts) */
 
   const CardCallback = (value) => {
     setActiveCard(value);
+  }
+
+  const relevantCard = (id) => {
+    console.log(activeCard)
+    var result = Receipts.find(receipt => receipt.id === id);
+    return result;
   }
 
   return (
@@ -25,16 +37,13 @@ const Home = () => {
       <Navbar />
       <div className="Body">
         <div className="CardsContainers">
-          <ReceiptCard CardCallBack={CardCallback} />
-          <ReceiptCard />
-          <ReceiptCard />
-          <ReceiptCard />
-          <ReceiptCard />
-          <ReceiptCard />
+          {Receipts && Receipts.map(Receipt => (
+            <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt}/>
+          ))}
 
           {activeCard &&
             <div className='bodyOverlay'>
-              <NewReceiptCard setActiveCard={setActiveCard} />
+              <NewReceiptCard Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
             </div>}
         </div>
       </div>
