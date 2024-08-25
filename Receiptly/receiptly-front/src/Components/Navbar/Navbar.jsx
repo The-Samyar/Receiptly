@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className="navLinks">
           <div className="navLinksContainer">
             <a href="#" className="navLinkSpecial">New Receipt</a>
-            <a href="/currentRecepits" className="navLink">Your Receipts</a>
+            <a href="/" className="navLink">Your Receipts</a>
             <a href="/yourProducts" className="navLink">Your Products</a>
             <a href="/history" className="navLink">History</a>
           </div>
