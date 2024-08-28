@@ -208,6 +208,30 @@ dev = ["black (==22.3.0)", "coveralls (>=3.3,<4)", "flake8 (>=4,<5)", "iso8601 (
 test = ["coveralls (>=3.3,<4)", "iso8601 (>=1,<2)", "mock (>=4,<5)", "pytest (>=6,<7)", "pytest-asyncio (>=0.16,<2)", "pytest-benchmark (>=3.4,<4)", "pytest-cov (>=3,<4)", "pytest-mock (>=3,<4)", "pytz (==2022.1)", "snapshottest (>=0.6,<1)"]
 
 [[package]]
+name = "graphene-django"
+version = "3.2.2"
+description = "Graphene Django integration"
+optional = false
+python-versions = "*"
+files = [
+    {file = "graphene-django-3.2.2.tar.gz", hash = "sha256:059ccf25d9a5159f28d7ebf1a648c993ab34deb064e80b70ca096aa22a609556"},
+    {file = "graphene_django-3.2.2-py2.py3-none-any.whl", hash = "sha256:0fd95c8c1cbe77ae2a5940045ce276803c3acbf200a156731e0c730f2776ae2c"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+graphene = ">=3.0,<4"
+graphql-core = ">=3.1.0,<4"
+graphql-relay = ">=3.1.1,<4"
+promise = ">=2.1"
+text-unidecode = "*"
+
+[package.extras]
+dev = ["coveralls", "django-filter (>=22.1)", "djangorestframework (>=3.6.3)", "mock", "pre-commit", "pytest (>=7.3.1)", "pytest-cov", "pytest-django (>=4.5.2)", "pytest-random-order", "pytz", "ruff (==0.1.2)"]
+rest-framework = ["djangorestframework (>=3.6.3)"]
+test = ["coveralls", "django-filter (>=22.1)", "djangorestframework (>=3.6.3)", "mock", "pytest (>=7.3.1)", "pytest-cov", "pytest-django (>=4.5.2)", "pytest-random-order", "pytz"]
+
+[[package]]
 name = "graphql-core"
 version = "3.2.3"
 description = "GraphQL implementation for Python, a port of GraphQL.js, the JavaScript reference implementation for GraphQL."
@@ -242,6 +266,22 @@ files = [
     {file = "idna-3.8-py3-none-any.whl", hash = "sha256:050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"},
     {file = "idna-3.8.tar.gz", hash = "sha256:d838c2c0ed6fced7693d5e8ab8e734d5f8fda53a039c0164afb0b82e771e3603"},
 ]
+
+[[package]]
+name = "promise"
+version = "2.3"
+description = "Promises/A+ implementation for Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "promise-2.3.tar.gz", hash = "sha256:dfd18337c523ba4b6a58801c164c1904a9d4d1b1747c7d5dbf45b693a49d93d0"},
+]
+
+[package.dependencies]
+six = "*"
+
+[package.extras]
+test = ["coveralls", "futures", "mock", "pytest (>=2.7.3)", "pytest-benchmark", "pytest-cov"]
 
 [[package]]
 name = "psycopg2-binary"
@@ -346,6 +386,17 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.1"
 description = "A non-validating SQL parser."
@@ -359,6 +410,17 @@ files = [
 [package.extras]
 dev = ["build", "hatch"]
 doc = ["sphinx"]
+
+[[package]]
+name = "text-unidecode"
+version = "1.3"
+description = "The most basic Text::Unidecode port"
+optional = false
+python-versions = "*"
+files = [
+    {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
+    {file = "text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8"},
+]
 
 [[package]]
 name = "tzdata"
@@ -391,4 +453,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "8f0a819ee2e57b343a631b944be8a42a8e6f2647040f2dcd8a132684c0ab490b"
+content-hash = "e824fe0dfd662be8174854db0551e42f44c9c3634fb4d92c136eb6794c1e8f41"

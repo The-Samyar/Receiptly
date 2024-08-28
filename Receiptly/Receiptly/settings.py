@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     # APPS
     'rest_framework',
     'corsheaders',
+    'graphene_django',
     'api',
+    
 ]
 
 MIDDLEWARE = [
@@ -56,6 +59,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Receiptly.urls'
+
+GRAPHENE = {
+    "SCHEMA": "api.schema.schema"
+}
 
 TEMPLATES = [
     {
