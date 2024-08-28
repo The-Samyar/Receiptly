@@ -1,5 +1,7 @@
 from django.urls import path
-from . import views
+from . import views, apps
+from graphene_django.views import GraphQLView
+
 
 app_name = 'api'
 
@@ -15,4 +17,6 @@ urlpatterns = [
     # path('products/delete/<int:product_id>/', views.products),
 
     # path('history/', views.products),
+
+    path('graphiql', GraphQLView.as_view(graphiql=True))
 ]
