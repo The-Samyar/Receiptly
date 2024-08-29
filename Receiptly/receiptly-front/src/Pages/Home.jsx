@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
 import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
 import { getReceipt } from '../Api/api.js';
+import {gql} from '@apollo/client'
 
 const Home = () => {
 
@@ -28,7 +29,7 @@ const Home = () => {
 
   const relevantCard = (id) => {
     console.log(activeCard)
-    var result = Receipts.find(receipt => receipt.id === id);
+    var result = Receipts?.find(receipt => receipt?.id === id);
     return result;
   }
 
