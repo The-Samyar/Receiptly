@@ -18,5 +18,5 @@ urlpatterns = [
 
     # path('history/', views.products),
 
-    path('graphiql', GraphQLView.as_view(graphiql=True))
+    path('graphiq', GraphQLView.as_view(graphiql=True))
 ]
