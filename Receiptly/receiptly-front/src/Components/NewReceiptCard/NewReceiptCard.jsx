@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import './NewReceitCard.css'
 import { editSingleReceipt } from '../../Api/api';
+import { FaPlus } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+
 
 const NewReceiptCard = ({ setActiveCard, Receipt }) => {
 
@@ -67,7 +71,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                     <h3>Your Receipt</h3>
                 </div>
                 <div className="addCardClose" onClick={() => CardCallback(false)}>
-                    close
+                    <IoClose className="closeIcon"/>
                 </div>
             </div>
 
@@ -137,9 +141,9 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                                                 </td>
                                                 <td>
                                                     <div className="tdContent">
-                                                        <p onClick={() => edit && handleOnClick(product.id, 'delete')}>Minus</p>
+                                                        <FaMinus className="tdContentIcon" onClick={() => edit && handleOnClick(product.id, 'delete')}/>
                                                         <input type="text" readOnly={!edit} value={product.count} name="" id="" className="inputTable" />
-                                                        <p onClick={() => edit && handleOnClick(product.id, 'add')}>Add</p>
+                                                        <FaPlus className="tdContentIcon" onClick={() => edit && handleOnClick(product.id, 'add')} />
                                                     </div>
                                                 </td>
                                             </tr> : null

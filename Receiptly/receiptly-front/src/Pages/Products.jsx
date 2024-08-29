@@ -1,8 +1,26 @@
-import React from 'react'
+import Navbar from '../Components/Navbar/Navbar'
+import ProductCard from '../Components/ProductCard/ProductCard'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <>
+      <Navbar />
+      <div className="Body">
+        <div className="categoryTitle">
+          <span className="title">Goods</span>
+          <hr/>
+        </div>
+
+        <div className="ProductsContainers">
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </div>
+      </div>
+    </>
   )
 }
 
