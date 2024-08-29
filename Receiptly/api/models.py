@@ -33,6 +33,9 @@ class Receipt(models.Model):
     deadline_date = models.DateField(null=True, blank=True)
     products = models.ManyToManyField(Product, through="OrderInfo")
 
+    # Shows the date prior to deadline after which the receipt owner is notified about the remaining days until deadline date
+    deadline_notice = models.DateField(default=None, blank=True, null=True)
+
     def __str__(self) -> str:
         return f"User : {self.user} - Customer : {self.customer_name}"
     
