@@ -20,9 +20,9 @@
     padding: 50px;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
+    /* gap: 10px; */
+    /* border: 1px solid red; */
 }
 
 .categoryTitle{
