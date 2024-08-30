@@ -7,15 +7,8 @@ from pprint import pprint
 class ReceiptType(DjangoObjectType):
     class Meta:
         model = models.Receipt
-        fields = (
-            'id',
-            'user',
-            'title',
-            'customer_name',
-            'deadline_date',
-            'address',
+        exclude = (
             'products',
-            'orderinfo_set'
         )
 
 class UserType(DjangoObjectType):
@@ -30,12 +23,34 @@ class UserType(DjangoObjectType):
 class ProductType(DjangoObjectType):
     class Meta:
         model = models.Product
-        fields = "__all__"
+        fields = (
+            'title',
+            'cost_per_unit',
+            'effort',
+        )
 
 class OrderInfoType(DjangoObjectType):
     class Meta:
         model = models.OrderInfo
-        fields = "__all__"
+        fields = (
+            'product_count',
+        )
+    
+    id = graphene.String()
+    def resolve_id(self, info):
+        return self.product.id
+
+    title = graphene.String()
+    def resolve_title(self, info):
+        return self.product.title
+
+    effort = graphene.Float()
+    def resolve_effort(self, info):
+        return self.product.effort
+    
+    cost_per_unit = graphene.Int()
+    def resolve_cost_per_unit(self, info):
+        return self.product.cost_per_unit
 
 class Query(graphene.ObjectType):
     receipts = graphene.List(
