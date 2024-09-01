@@ -23,6 +23,13 @@ class Product(models.Model):
         return f"User : {self.user} - product name: {self.title}"
 
 class Receipt(models.Model):
+
+    RECEIPT_STATE_CHOICES = [
+        ('active', 'Active'),
+        ('cancelled', 'Cancelled'),
+        ('done', 'Done'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)
     customer_name = models.CharField(max_length=200, null=True, blank=True)
@@ -32,6 +39,7 @@ class Receipt(models.Model):
     order_date = models.DateField(default=timezone.now)
     deadline_date = models.DateField(null=True, blank=True)
     products = models.ManyToManyField(Product, through="OrderInfo")
+    state = models.CharField(default=None, max_length=20, null=True, blank=True, choices=RECEIPT_STATE_CHOICES)
 
     # Shows the date prior to deadline after which the receipt owner is notified about the remaining days until deadline date
     deadline_notice = models.DateField(default=None, blank=True, null=True)
