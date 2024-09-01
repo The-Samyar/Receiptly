@@ -23,11 +23,7 @@ class UserType(DjangoObjectType):
 class ProductType(DjangoObjectType):
     class Meta:
         model = models.Product
-        fields = (
-            'title',
-            'cost_per_unit',
-            'effort',
-        )
+        fields = '__all__'
 
 class OrderInfoType(DjangoObjectType):
     class Meta:
