@@ -3,6 +3,9 @@ from graphene_django import DjangoObjectType, DjangoListField
 from . import models
 from django.contrib.auth.models import User
 from pprint import pprint
+from django.core.serializers import serialize ,deserialize
+from .redis_script import Rcache
+import json
 
 class ReceiptType(DjangoObjectType):
     class Meta:
@@ -70,14 +73,40 @@ class Query(graphene.ObjectType):
         product_id = graphene.String()
     )
 
+    # REFACTOR
     def resolve_products(root, info, product_id=None):
         if product_id:
             try:
-                return [models.Product.objects.get(pk = product_id)]
+                if Rcache.exists('products'):
+                    products = deserialize('json', Rcache.get('products'))
+                    br = True
+                    for item in products:
+                        if str(item.object.id) == str(product_id):
+                            product = [item.object]
+                            print("Sent from redis")
+                            br = False
+                            break
+                    if br == True : raise models.Product.DoesNotExist
+                else:
+                    products = models.Product.objects.all()
+                    Rcache.set('products',  serialize('json', products))
+                    product = [products.get(pk = product_id)]
+                    print("Sent from database")
+
+                return product
+            
             except models.Product.DoesNotExist:
                 return Exception(f"Product with id {product_id} does not exist")
         else:
-            return models.Product.objects.all()
+            if Rcache.exists('products'):
+                deserialized = deserialize('json',Rcache.get('products'))
+                products = [item.object for item in deserialized]
+                print("Sent from redis")
+            else:
+                products = models.Product.objects.all()
+                print("Sent from database")
+                Rcache.set('products',  serialize('json', products))
+            return products
         
 
 schema = graphene.Schema(query=Query)
