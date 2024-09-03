@@ -1,11 +1,9 @@
 import graphene
-from graphene_django import DjangoObjectType, DjangoListField
+from graphene_django import DjangoObjectType
 from . import models
 from django.contrib.auth.models import User
-from pprint import pprint
 from django.core.serializers import serialize, deserialize
 from .redis_script import Rcache
-import json
 
 
 class ReceiptType(DjangoObjectType):
@@ -83,7 +81,7 @@ class Query(graphene.ObjectType):
                             print("Sent from redis")
                             br = False
                             break
-                    if br == True:
+                    if br is True:
                         raise models.Product.DoesNotExist
                 else:
                     products = models.Product.objects.all()
