@@ -1,3 +1,3 @@
 import redis
 
-Rcache = redis.Redis('localhost', 6379)
+Rcache = redis.Redis("localhost", 6379)
