@@ -70,39 +70,26 @@ class Query(graphene.ObjectType):
 
     # REFACTOR
     def resolve_products(root, info, product_id=None):
+        if not Rcache.exists("products"):
+            products = models.Product.objects.all()
+            Rcache.set("products", serialize("json", products))
+
+        products = deserialize("json", Rcache.get("products"))
+
         if product_id:
             try:
-                if Rcache.exists("products"):
-                    products = deserialize("json", Rcache.get("products"))
-                    br = True
-                    for item in products:
-                        if str(item.object.id) == str(product_id):
-                            product = [item.object]
-                            print("Sent from redis")
-                            br = False
-                            break
-                    if br is True:
-                        raise models.Product.DoesNotExist
-                else:
-                    products = models.Product.objects.all()
-                    Rcache.set("products", serialize("json", products))
-                    product = [products.get(pk=product_id)]
-                    print("Sent from database")
+                product = None
+                for item in products:
+                    if str(item.object.id) == str(product_id):
+                        product = [item.object]
+                        return product
 
-                return product
+                raise models.Product.DoesNotExist
 
             except models.Product.DoesNotExist:
                 return Exception(f"Product with id {product_id} does not exist")
         else:
-            if Rcache.exists("products"):
-                deserialized = deserialize("json", Rcache.get("products"))
-                products = [item.object for item in deserialized]
-                print("Sent from redis")
-            else:
-                products = models.Product.objects.all()
-                print("Sent from database")
-                Rcache.set("products", serialize("json", products))
-            return products
+            return [item.object for item in products]
 
 
 schema = graphene.Schema(query=Query)
