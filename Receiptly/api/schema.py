@@ -58,17 +58,27 @@ class Query(graphene.ObjectType):
     receipts = graphene.List(ReceiptType, receipt_id=graphene.String())
 
     def resolve_receipts(root, info, receipt_id=None):
+        if not Rcache.exists("receipts"):
+            receipts = models.Receipt.objects.all()
+            Rcache.set("receipts", serialize("json", receipts))
+
+        receipts = deserialize("json", Rcache.get("receipts"))
+
         if receipt_id:
             try:
-                return [models.Receipt.objects.get(id=receipt_id)]
+                for item in receipts:
+                    if str(item.object.id) == str(receipt_id):
+                        return [item.object]
+
+                raise models.Receipt.DoesNotExist
+
             except models.Receipt.DoesNotExist:
                 return Exception(f"Receipt with id {receipt_id} does not exist")
         else:
-            return models.Receipt.objects.all()
+            return [item.object for item in receipts]
 
     products = graphene.List(ProductType, product_id=graphene.String())
 
-    # REFACTOR
     def resolve_products(root, info, product_id=None):
         if not Rcache.exists("products"):
             products = models.Product.objects.all()
@@ -78,11 +88,9 @@ class Query(graphene.ObjectType):
 
         if product_id:
             try:
-                product = None
                 for item in products:
                     if str(item.object.id) == str(product_id):
-                        product = [item.object]
-                        return product
+                        return [item.object]
 
                 raise models.Product.DoesNotExist
 
