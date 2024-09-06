@@ -100,4 +100,11 @@ class Query(graphene.ObjectType):
             return [item.object for item in products]
 
 
-schema = graphene.Schema(query=Query)
+# class Mutation(graphene.Mutation):
+#     pass
+
+
+schema = graphene.Schema(
+    query=Query,
+    # mutation=Mutation,
+)
