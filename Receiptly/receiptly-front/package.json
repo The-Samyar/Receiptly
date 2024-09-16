@@ -4,7 +4,7 @@
   "proxy": "http://localhost:8080",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.11.5",
+    "@apollo/client": "^3.11.8",
     "axios": "^1.7.3",
     "cra-template": "1.2.0",
     "graphql": "^16.9.0",
