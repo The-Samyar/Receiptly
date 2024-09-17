@@ -136,22 +136,26 @@ class AddProductMutation(DjangoModelFormMutation):
 #         product = models.Product.objects.get(id=input["id"])
 #         return UpdateProductMutation(product=product)
 
-# class DeleteProductMutation(DjangoModelFormMutation):
-#     product = graphene.Field(ProductType)
 
-#     class Meta:
-#         form_class = forms.ProductsForm
+class DeleteProductMutation(graphene.Mutation):
 
-#     @classmethod
-#     def mutate(cls, root, info, input):
-#         product = models.Product.objects.get(id=input["id"])
-#         return DeleteProductMutation(product=product)
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    deleted = graphene.Boolean()
+    product = graphene.Field(ProductType)
+
+    def mutate(root, info, id):
+        product = models.Product.objects.get(id=id)
+        product.delete()
+
+        return DeleteProductMutation(product=product, deleted=True)
 
 
 class Mutation(graphene.ObjectType):
     add_product = AddProductMutation.Field()
     # update_product = UpdateProductMutation.Field()
-    # delete_product = ProductMutation.Field()
+    delete_product = DeleteProductMutation.Field()
 
 
 schema = graphene.Schema(
