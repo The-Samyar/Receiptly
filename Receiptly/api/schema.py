@@ -1,11 +1,15 @@
 import graphene
 from graphene_django import DjangoObjectType
-from . import models
+from graphene_django.forms.mutation import DjangoModelFormMutation
+from . import models, forms
 from django.contrib.auth.models import User
 from django.core.serializers import serialize, deserialize
 from .redis_script import Rcache
 
+user = User.objects.get(username="akbar")
 
+
+# TYPES
 class ReceiptType(DjangoObjectType):
     class Meta:
         model = models.Receipt
@@ -100,11 +104,57 @@ class Query(graphene.ObjectType):
             return [item.object for item in products]
 
 
-# class Mutation(graphene.Mutation):
-#     pass
+# <---------- MUTATIONS ---------->
+# Product Mutations
+class AddProductMutation(DjangoModelFormMutation):
+    product = graphene.Field(ProductType)
+
+    class Meta:
+        form_class = forms.ProductsForm
+
+    @classmethod
+    def mutate(cls, root, info, input):
+        form = forms.ProductsForm(input)
+        if form.is_valid():
+            product = form.save(commit=False)
+
+            # Sets products user. Later on when authentication is handled, this should be automatically populated by the user who's logged in
+            product.user = user
+
+            product.save()
+        return AddProductMutation(product=product)
+
+
+# class UpdateProductMutation(DjangoModelFormMutation):
+#     product = graphene.Field(ProductType)
+
+#     class Meta:
+#         form_class = forms.ProductsForm
+
+#     @classmethod
+#     def mutate(cls, root, info, input):
+#         product = models.Product.objects.get(id=input["id"])
+#         return UpdateProductMutation(product=product)
+
+# class DeleteProductMutation(DjangoModelFormMutation):
+#     product = graphene.Field(ProductType)
+
+#     class Meta:
+#         form_class = forms.ProductsForm
+
+#     @classmethod
+#     def mutate(cls, root, info, input):
+#         product = models.Product.objects.get(id=input["id"])
+#         return DeleteProductMutation(product=product)
+
+
+class Mutation(graphene.ObjectType):
+    add_product = AddProductMutation.Field()
+    # update_product = UpdateProductMutation.Field()
+    # delete_product = ProductMutation.Field()
 
 
 schema = graphene.Schema(
     query=Query,
-    # mutation=Mutation,
+    mutation=Mutation,
 )
