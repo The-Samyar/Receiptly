@@ -89,15 +89,15 @@ WSGI_APPLICATION = "Receiptly.wsgi.application"
 }
 """
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "testdatabase",
+    #     "USER": "samyar",
+    #     "PASSWORD": "1380",
+    #     "HOST": "localhost",
+    #     "PORT": "5432",
+    # },
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "testdatabase",
-        "USER": "samyar",
-        "PASSWORD": "1380",
-        "HOST": "localhost",
-        "PORT": "5432",
-    },
-    "sqlite": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     },
