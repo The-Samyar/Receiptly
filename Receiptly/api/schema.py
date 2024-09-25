@@ -110,11 +110,11 @@ class AddProductMutation(DjangoModelFormMutation):
     product = graphene.Field(ProductType)
 
     class Meta:
-        form_class = forms.ProductsForm
+        form_class = forms.ProductForm
 
     @classmethod
     def mutate(cls, root, info, input):
-        form = forms.ProductsForm(input)
+        form = forms.ProductForm(input)
         if form.is_valid():
             product = form.save(commit=False)
 
@@ -125,16 +125,24 @@ class AddProductMutation(DjangoModelFormMutation):
         return AddProductMutation(product=product)
 
 
-# class UpdateProductMutation(DjangoModelFormMutation):
-#     product = graphene.Field(ProductType)
+class UpdateProductMutation(DjangoModelFormMutation):
 
-#     class Meta:
-#         form_class = forms.ProductsForm
+    class Meta:
+        form_class = forms.ProductForm
 
-#     @classmethod
-#     def mutate(cls, root, info, input):
-#         product = models.Product.objects.get(id=input["id"])
-#         return UpdateProductMutation(product=product)
+    product = graphene.Field(ProductType)
+
+    @classmethod
+    def mutate(cls, root, info, input):
+        product = models.Product.objects.get(id=input["id"])
+        form = forms.ProductForm(input)
+        if form.is_valid():
+            for key in form.cleaned_data:
+                value = form.cleaned_data[key]
+                if (value is not None) and (value != ""):
+                    setattr(product, key, value)
+        product.save()
+        return UpdateProductMutation(product=product)
 
 
 class DeleteProductMutation(graphene.Mutation):
@@ -154,7 +162,7 @@ class DeleteProductMutation(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     add_product = AddProductMutation.Field()
-    # update_product = UpdateProductMutation.Field()
+    update_product = UpdateProductMutation.Field()
     delete_product = DeleteProductMutation.Field()
 
 
