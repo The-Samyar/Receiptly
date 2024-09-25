@@ -2,20 +2,20 @@ import React from 'react'
 import IMG from '../../Images/test.jpg'
 import './ProductCard.css'
 
-const ProductCard = () => {
+const ProductCard = ({product}) => {
     return (
         <div className="cardContainer">
             <div className="cardHeader">
                 <div className="cardHeaderItem">
-                    <h3 className="cardTitle">Shirt</h3>
+                    <h3 className="cardTitle">{product?.title}</h3>
                 </div>
                 <div className="cardHeaderItem">
                     <span className="cardItemTitle">Price:</span>
-                    <span className="cardItemValue">$200 / number</span>
+                    <span className="cardItemValue">${product?.costPerUnit} / number</span>
                 </div>
                 <div className="cardHeaderItem">
                     <span className="cardItemTitle">Labor:</span>
-                    <span className="cardItemValue">14.0 hours</span>
+                    <span className="cardItemValue">{product?.effort} hours</span>
                 </div>
             </div>
 

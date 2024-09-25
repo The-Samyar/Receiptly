@@ -11,7 +11,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
     const CardCallback = (value) => {
         setActiveCard(value);
     }
-
+    
     const [Products, setProducts] = useState(Receipt?.products);
     const [editReceipt, setEditReceipt] = useState({ id: Receipt?.id });
     const [edit, setEdit] = useState(false);
@@ -26,20 +26,20 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
         if (action === 'add') {
             setProducts((prevItems) => (
                 prevItems.map(item => (
-                    item.id === id ? { ...item, count: item.count + 1 } : item
+                    item.id === id ? { ...item, productCount: item.productCount + 1 } : item
                 ))
             ))
         } else {
             setProducts((prevItems) => (
                 prevItems.map(item => (
-                    item.id === id && item.count > 0 ? { ...item, count: item.count - 1 } : item
+                    item.id === id && item.productCount > 0 ? { ...item, productCount: item.productCount - 1 } : item
                 ))
             ))
         }
     }
 
     function getSum(total, newValue) {
-        return total + (newValue.count * newValue.cost_per_unit)
+        return total + (newValue.productCount * newValue.costPerUnit)
     }
 
     const getEffort = (total, newValue) => {
@@ -54,7 +54,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
         e.preventDefault();
 
         if(productsChanged === true)
-            console.log({ ...editReceipt, products: Products })
+            console.log({ item: editReceipt.id, products: Products })
         else
             console.log({ ...editReceipt })
         /* const data = await editSingleReceipt({...editReceipt , products: Products}); */
@@ -83,7 +83,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                     </div>
                     <div className="inputContainer">
                         <label htmlFor="customer_name" className="inputLabel">Customer Name</label>
-                        <input readOnly={!edit} type="text" onChange={(e) => handleChange(e)} defaultValue={Receipt.customer_name} placeholder="Type customer's full name" name="customer_name" className="inputText" id="customer_name" />
+                        <input readOnly={!edit} type="text" onChange={(e) => handleChange(e)} defaultValue={Receipt.customerName} placeholder="Type customer's full name" name="customer_name" className="inputText" id="customer_name" />
                     </div>
                     <div className="inputContainer">
                         <label htmlFor="address" className="inputLabel">Address</label>
@@ -97,11 +97,11 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                     <div className="dabbleInputContainer">
                         <div className="inputContainer">
                             <label htmlFor="order_date" className="inputLabel">Date Of Order</label>
-                            <input readOnly={!edit} type="date" onChange={(e) => handleChange(e)} defaultValue={Receipt.order_date} className='inputText' name="order_date" id="order_date" />
+                            <input readOnly={!edit} type="date" onChange={(e) => handleChange(e)} defaultValue={Receipt.orderDate} className='inputText' name="order_date" id="order_date" />
                         </div>
                         <div className="inputContainer">
                             <label htmlFor="deadline_date" className="inputLabel">Deadline</label>
-                            <input readOnly={!edit} type="date" onChange={(e) => handleChange(e)} defaultValue={Receipt.deadline_date} className='inputText' name="deadline_date" id="deadline_date" />
+                            <input readOnly={!edit} type="date" onChange={(e) => handleChange(e)} defaultValue={Receipt.deadlineDate} className='inputText' name="deadline_date" id="deadline_date" />
                         </div>
                     </div>
 
@@ -136,7 +136,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                                                 </td>
                                                 <td>
                                                     <div className="tdContent">
-                                                        ${product.cost_per_unit}
+                                                        ${product.costPerUnit}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -165,7 +165,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                             <div className="productsInfo">
                                 {Products.map((item) => (
                                     item.count !== 0 ?
-                                        <p>{item.count} * {item.title} : ${item.cost_per_unit} (About {item.effort * item.count} hours)</p>
+                                        <p>{item.productCount} * {item.title} : ${item.costPerUnit} (About {item.effort * item.count} hours)</p>
                                         : null
                                 ))}
                             </div>
