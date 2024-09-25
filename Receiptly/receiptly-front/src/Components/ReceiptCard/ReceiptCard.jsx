@@ -27,9 +27,9 @@ const ReceiptCard = ({ CardCallBack, Receipt }) => {
       <div className="ReceiptCardHeader">
         <div className="ReceiptCardTitle">
           <h2 className="ReceiptCardHeader">{Receipt.title}</h2>
-          <span className="ReceiptCardDetail">Deadline: {Receipt.deadline_date}</span>
+          <span className="ReceiptCardDetail">Deadline: {Receipt.deadlineDate}</span>
           <br />
-          <span className="ReceiptCardDetail">Customer: {Receipt.customer_name}</span>
+          <span className="ReceiptCardDetail">Customer: {Receipt.customerName}</span>
         </div>
 
         <div className="ReceiptCardAction">
