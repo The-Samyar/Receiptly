@@ -12,3 +12,14 @@ class ProductForm(forms.ModelForm):
             "title",
             "unit",
         )
+
+
+class ReceiptProductForm(forms.Form):
+    id = forms.IntegerField()
+    count = forms.IntegerField()
+
+
+class ReceiptForm(forms.ModelForm):
+    class Meta:
+        model = models.Receipt
+        exclude = ("user",)
