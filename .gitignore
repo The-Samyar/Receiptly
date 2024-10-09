@@ -164,4 +164,4 @@ cython_debug/
 
 # Django
 # Redis db
-Receiptly/dump.rdb
+./dump.rdb
