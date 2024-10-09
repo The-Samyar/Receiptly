@@ -1,13 +1,20 @@
-import strawberry_django
+import strawberry_django as sd
 from strawberry import auto
+from django.contrib.auth.models import User
 import strawberry
-
 from .. import models
 
 
-@strawberry_django.type(model=models.Product)
-class Product:
-    user: auto
+@sd.type(model=User)
+class UserType:
+    first_name: auto
+    last_name: auto
+    username: auto
+
+
+@sd.type(model=models.Product)
+class ProductType:
+    user: "UserType"
     title: auto
     unit: auto
     cost_per_unit: auto
