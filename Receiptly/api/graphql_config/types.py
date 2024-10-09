@@ -1,8 +1,8 @@
 import strawberry_django as sd
 from strawberry import auto
 from django.contrib.auth.models import User
-import strawberry
 from .. import models
+from typing import List
 
 
 @sd.type(model=User)
@@ -20,3 +20,16 @@ class ProductType:
     cost_per_unit: auto
     product_type: auto
     effort: auto
+
+
+@sd.type(model=models.Receipt)
+class ReceiptType:
+    user: "UserType"
+    title: auto
+    customer_name: auto
+    customer_number: auto
+    has_paid: auto
+    order_date: auto
+    deadline_date: auto
+    deadline_notice: auto
+    state: auto
