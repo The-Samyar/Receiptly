@@ -7,6 +7,7 @@ from graphql_config.types import Product
 
 @strawberry.type
 class Query:
+    products: list[Product] = sd.field()
 
 
 schema = strawberry.Schema(
