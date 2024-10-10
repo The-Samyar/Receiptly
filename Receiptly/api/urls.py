@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from strawberry.django.views import AsyncGraphQLView, GraphQLView
+from strawberry.django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 from .schema import schema
 
