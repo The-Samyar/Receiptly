@@ -3,7 +3,6 @@ import strawberry_django as sd
 from .output_types import ProductType, UserType, ReceiptType
 from .. import models
 from django.contrib.auth.models import User
-from typing import Optional, List
 
 
 @strawberry.type
