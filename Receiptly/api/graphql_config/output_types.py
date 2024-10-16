@@ -7,6 +7,7 @@ import strawberry
 
 @sd.type(model=User)
 class UserType:
+    id: auto
     first_name: auto
     last_name: auto
     username: auto
@@ -14,6 +15,7 @@ class UserType:
 
 @sd.type(model=models.Product)
 class ProductType:
+    id: auto
     user: "UserType"
     title: auto
     unit: auto
@@ -24,6 +26,9 @@ class ProductType:
 
 @strawberry.type
 class ReceiptProductInfoType:
+    order_info_id: strawberry.ID
+    receipt_id: strawberry.ID
+    product_id: strawberry.ID
     title: str
     cost_per_unit: int
     effort: float
@@ -32,6 +37,7 @@ class ReceiptProductInfoType:
 
 @sd.type(model=models.Receipt)
 class ReceiptType:
+    id: auto
     user: "UserType"
     title: auto
     customer_name: auto
@@ -49,6 +55,9 @@ class ReceiptType:
         for order in self.orderinfo_set.all():
             products_list.append(
                 ReceiptProductInfoType(
+                    order_info_id=order.id,
+                    receipt_id=order.receipt.id,
+                    product_id=order.product.id,
                     title=order.product.title,
                     cost_per_unit=order.product.cost_per_unit,
                     effort=order.product.effort,
