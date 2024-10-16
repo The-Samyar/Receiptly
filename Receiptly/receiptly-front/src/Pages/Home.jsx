@@ -6,33 +6,31 @@ import { gql, useQuery } from '@apollo/client'
 
 const Home = () => {
 
-  const possibleFilters = ["All" , "Cancelled" , "Done"]
+  const possibleFilters = ["ALL" , "CANCELLED" , "DONE"]
 
   const [activeCard, setActiveCard] = useState(false);
-  const [filter , setFilter] = useState("All");
+  const [filter , setFilter] = useState("ALL");
   const [Receipts, setReceipts] = useState(null);
   const [filteredPosts, setFilteredPosts] = useState(null);
 
   const dog = gql`
     query {
   receipts {
-    customerName
-    deadlineDate
+    id
     title
-    address
+    state
+    customerName
+    customerNumber
+    deadlineDate
+    deadlineNotice
     hasPaid
     orderDate
-    id
-    number
-    deadlineNotice
-    products: orderinfoSet {
+    products {
       costPerUnit
+      count
       effort
-      id
-      productCount
       title
     }
-    state
   }
 }
   
@@ -52,6 +50,7 @@ const Home = () => {
     console.log(filteredPosts)
 
   const CardCallback = (value) => {
+    document.body.style.overflow = 'hidden';
     setActiveCard(value);
   }
 
@@ -72,10 +71,10 @@ const Home = () => {
   useEffect(() => {
 
     const filterPosts = (filter) => {
-      if(filter === "Done"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "Done"));
-      }else if( filter === "Cancelled"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "Cancelled"));
+      if(filter === "DONE"){
+        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "DONE"));
+      }else if( filter === "CANCELLED"){
+        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "CANCELLED"));
       }
     }
 
@@ -91,9 +90,9 @@ const Home = () => {
       <div className="Body">
         <div className="filter">
           <span className="filterTitle">Receipts: </span>
-          <div className={filter === "All" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("All")} >All</div>
-          <div className={filter === "Done" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("Done")} >Done</div>
-          <div className={filter === "Cancelled" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("Cancelled")} >Cancelled</div>
+          <div className={filter === "ALL" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("ALL")} >All</div>
+          <div className={filter === "DONE" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("DONE")} >Done</div>
+          <div className={filter === "CANCELLED" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("CANCELLED")} >Cancelled</div>
         </div>
         <div className="CardsContainers">
           {/* {Receipts && Receipts.map(Receipt => (
@@ -101,7 +100,7 @@ const Home = () => {
           ))} */}
 
           {
-            filter === "All" ? Receipts?.map(Receipt => (
+            filter === "ALL" ? Receipts?.map(Receipt => (
               <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt} />
             )) : 
             
