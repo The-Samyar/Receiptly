@@ -9,6 +9,7 @@ import { IoClose } from "react-icons/io5";
 const NewReceiptCard = ({ setActiveCard, Receipt }) => {
 
     const CardCallback = (value) => {
+        /* document.body.style.overflow = 'auto'; */
         setActiveCard(value);
     }
     

@@ -24,6 +24,7 @@ const ReceiptCard = ({ CardCallBack, Receipt }) => {
 
   return (
     <div className="ReceiptCardContainer">
+        <div className={Receipt?.state === "DONE" ? "ReceiptCardStateDone" : Receipt.state === "CANCELLED" ? "ReceiptCardStateCancelled" : "ReceiptCardStateActive"} />
       <div className="ReceiptCardHeader">
         <div className="ReceiptCardTitle">
           <h2 className="ReceiptCardHeader">{Receipt.title}</h2>
