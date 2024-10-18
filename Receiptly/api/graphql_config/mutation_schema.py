@@ -5,11 +5,13 @@ from .input_types import (
     EditProductInputType,
     DeleteProductType,
     NewReceiptInputType,
+    EditReceiptInputType,
+    DeleteReceiptInputType,
 )
 from .output_types import ProductType, ReceiptType
 from .. import models
 from django.contrib.auth.models import User
-from typing import cast, List
+from typing import cast
 
 
 # -----------------------------------------------------------------------------
@@ -33,19 +35,21 @@ class Mutation:
 
         product = models.Product.objects.get(id=edited_product.id)
         edited_product_dict = vars(edited_product)
-        for key, value in edited_product_dict.items():
+        for field, value in edited_product_dict.items():
             if value != "id" and value is not strawberry.UNSET:
-                setattr(product, key, value)
+                setattr(product, field, value)
         product.save()
 
         return cast(ProductType, product)
 
     # Deletes an existing product
     @sd.mutation
-    def delete_product(self, deleted_product: DeleteProductType) -> ProductType:
-        product = models.Product.objects.get(id=deleted_product.id)
-        product.delete()
-        return product
+    def delete_product(self, deleted_product: DeleteProductType) -> bool:
+        try:
+            models.Product.objects.get(id=deleted_product.id).delete()
+            return True
+        except models.Product.DoesNotExist:
+            return False
 
     # --------------- Receipt mutations ---------------
     # Saves new receipt
@@ -62,3 +66,38 @@ class Mutation:
                 },
             )
         return cast(ReceiptType, receipt)
+
+    # Edits an existing receipt
+    @sd.mutation
+    def edit_receipt(edited_receipt: EditReceiptInputType) -> ReceiptType:
+        receipt = models.Receipt.objects.get(id=edited_receipt.id)
+        edited_receipt_dict = vars(edited_receipt)
+        if edited_receipt_dict["products"] is not strawberry.UNSET:
+            products = edited_receipt_dict.pop("products")
+            for product in products:
+                order, created = receipt.orderinfo_set.get_or_create(
+                    receipt=receipt,
+                    product=user.product_set.get(id=product.id),
+                )
+                if product.count == 0:
+                    order.delete()
+                else:
+                    order.product_count = product.count
+                    order.save()
+        for field, value in edited_receipt_dict.items():
+
+            if value != "id" and value is not strawberry.UNSET:
+                setattr(receipt, field, value)
+
+        receipt.save()
+
+        return cast(ReceiptType, receipt)
+
+    # Deletes an existing receipt
+    @sd.mutation
+    def delete_receipt(deleted_receipt: DeleteReceiptInputType) -> bool:
+        try:
+            models.Receipt.objects.get(id=deleted_receipt.id).delete()
+            return True
+        except models.Receipt.DoesNotExist:
+            return False

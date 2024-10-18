@@ -1,7 +1,7 @@
 import strawberry_django as sd
 from .. import models
 import strawberry
-from typing import List
+from typing import List, Optional
 
 
 @sd.input(model=models.Product, exclude=["id", "user"])
@@ -16,15 +16,26 @@ class EditProductInputType:
 
 @sd.input(model=models.Product, fields=["id"])
 class DeleteProductType:
-    pass
+    id: strawberry.ID
 
 
 @strawberry.input
 class OrderProductsInfoInputType:
-    id: strawberry.ID
-    count: int
+    id: Optional[strawberry.ID]
+    count: Optional[int]
 
 
 @sd.input(model=models.Receipt, exclude=["id", "user"])
 class NewReceiptInputType:
     products: List[OrderProductsInfoInputType]
+
+
+@sd.input(model=models.Receipt, exclude=["user"], partial=True)
+class EditReceiptInputType:
+    id: strawberry.ID
+    products: Optional[List[OrderProductsInfoInputType]]
+
+
+@sd.input(model=models.Receipt, fields=["id"])
+class DeleteReceiptInputType:
+    id: strawberry.ID
