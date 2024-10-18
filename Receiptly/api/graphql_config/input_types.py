@@ -28,3 +28,14 @@ class OrderProductsInfoInputType:
 @sd.input(model=models.Receipt, exclude=["id", "user"])
 class NewReceiptInputType:
     products: List[OrderProductsInfoInputType]
+
+
+@sd.input(model=models.Receipt, exclude=["user"], partial=True)
+class EditReceiptInputType:
+    id: strawberry.ID
+    products: Optional[List[OrderProductsInfoInputType]]
+
+
+@sd.input(model=models.Receipt, fields=["id"])
+class DeleteReceiptInputType:
+    id: strawberry.ID
