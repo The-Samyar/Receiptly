@@ -9,7 +9,6 @@ import { IoClose } from "react-icons/io5";
 const NewReceiptCard = ({ setActiveCard, Receipt }) => {
 
     const CardCallback = (value) => {
-        /* document.body.style.overflow = 'auto'; */
         setActiveCard(value);
     }
     
@@ -27,24 +26,24 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
         if (action === 'add') {
             setProducts((prevItems) => (
                 prevItems.map(item => (
-                    item.id === id ? { ...item, productCount: item.productCount + 1 } : item
+                    item.id === id ? { ...item, count: item.count + 1 } : item
                 ))
             ))
         } else {
             setProducts((prevItems) => (
                 prevItems.map(item => (
-                    item.id === id && item.productCount > 0 ? { ...item, productCount: item.productCount - 1 } : item
+                    item.id === id && item.count > 0 ? { ...item, count: item.count - 1 } : item
                 ))
             ))
         }
     }
 
     function getSum(total, newValue) {
-        return total + (newValue.productCount * newValue.costPerUnit)
+        return total + (newValue.count * newValue.costPerUnit)
     }
 
     const getEffort = (total, newValue) => {
-        return total + newValue.effort
+        return total + (newValue.effort * newValue.count)
     }
 
     const handleChange = (e) => {
@@ -166,7 +165,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                             <div className="productsInfo">
                                 {Products.map((item) => (
                                     item.count !== 0 ?
-                                        <p>{item.productCount} * {item.title} : ${item.costPerUnit} (About {item.effort * item.count} hours)</p>
+                                        <p>{item.count} * {item.title} : ${item.costPerUnit} (About {item.effort * item.count} hours)</p>
                                         : null
                                 ))}
                             </div>

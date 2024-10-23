@@ -26,6 +26,7 @@ const Home = () => {
     hasPaid
     orderDate
     products {
+      productId
       costPerUnit
       count
       effort

@@ -68,6 +68,8 @@
     color: rgba(0, 0, 0, 0.402);
     font-weight: bold;
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .ReceiptCardAction{
@@ -109,4 +111,10 @@
     justify-content: center;
     padding: 8px;
     border-radius: 10px;
+}
+
+.DangerIcon {
+    font-size: 1rem;
+    color: red;
+    margin-left: 5px;
 }
