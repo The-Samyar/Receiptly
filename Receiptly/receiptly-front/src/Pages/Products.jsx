@@ -43,18 +43,11 @@ const Products = () => {
         </div>
 
         <div className="ProductsContainers">
-          {/* <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard /> */}
-
           {
             products && products.map(product => (
-              product?.productType === "G" ? <ProductCard product={product} /> : null
+              product?.productType === "GOOD" ? <ProductCard product={product} /> : null
             ))
           }
-          
         </div>
       </div>
     </>
