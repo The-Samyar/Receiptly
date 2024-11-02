@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
 import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
-import { gql, useQuery } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 
 const Home = () => {
 
@@ -33,16 +33,53 @@ const Home = () => {
       title
     }
   }
-}
+}`
   
-`
+/* const ADD_PRODUCT = gql`
+  mutation add_product(
+    $costPerUnit: Int!,
+    $productType: ProductTypeChoices!,
+    $effort: Float!,
+    $title: String!,
+    $unit: String!
+  ) {
+    newProduct(
+      product: { costPerUnit: $costPerUnit, productType: $productType, effort: $effort, title: $title, unit: $unit }
+    ) {
+      title
+    }
+  }
+`; */
+
+/* const product = {
+  costPerUnit: 1,
+  productType: "SERVICE",  // Must match the enum value exactly
+  effort: 1000,
+  title: "Ramin",
+  unit: "50"
+}; */
+
+/* const [add_product, { data, error }] = useMutation(ADD_PRODUCT);
+console.log(`error`)
+
+  useEffect(() => {
+    add_product({
+      variables: {
+        costPerUnit: product.costPerUnit,
+        productType: product.productType,  // Enum value
+        effort: product.effort,
+        title: product.title,
+        unit: product.unit
+      }
+    });
+  }, [add_product]); */
 
   const { loading, error, data } = useQuery(dog)
-  /* console.log(data) */
+  console.log(data)
 
   useEffect(() => {
     if (data) {
-      /* console.log(data) */
+      console.log(data)
       setReceipts(data.receipts);
     }
   }, [data])
@@ -51,7 +88,6 @@ const Home = () => {
     console.log(filteredPosts)
 
   const CardCallback = (value) => {
-    document.body.style.overflow = 'hidden';
     setActiveCard(value);
   }
 
