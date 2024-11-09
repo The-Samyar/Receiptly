@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
 import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
 import { gql, useMutation, useQuery } from '@apollo/client'
+import { Form } from '../Components/Form/Form.jsx';
 
 const Home = () => {
 
@@ -149,7 +150,7 @@ console.log(`error`)
 
           {activeCard &&
             <div className='bodyOverlay'>
-              <NewReceiptCard Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
+              <Form Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
             </div>}
         </div>
       </div>
