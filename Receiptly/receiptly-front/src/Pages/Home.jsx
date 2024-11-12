@@ -2,48 +2,85 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
 import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
-import { gql, useQuery } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
+import { Form } from '../Components/Form/Form.jsx';
 
 const Home = () => {
 
-  const possibleFilters = ["All" , "Cancelled" , "Done"]
+  const possibleFilters = ["ALL" , "CANCELLED" , "DONE"]
 
   const [activeCard, setActiveCard] = useState(false);
-  const [filter , setFilter] = useState("All");
+  const [filter , setFilter] = useState("ALL");
   const [Receipts, setReceipts] = useState(null);
   const [filteredPosts, setFilteredPosts] = useState(null);
 
   const dog = gql`
     query {
   receipts {
-    customerName
-    deadlineDate
+    id
     title
-    address
+    state
+    customerName
+    customerNumber
+    deadlineDate
+    deadlineNotice
     hasPaid
     orderDate
-    id
-    number
-    deadlineNotice
-    products: orderinfoSet {
+    products {
+      productId
       costPerUnit
+      count
       effort
-      id
-      productCount
       title
     }
-    state
   }
-}
+}`
   
-`
+/* const ADD_PRODUCT = gql`
+  mutation add_product(
+    $costPerUnit: Int!,
+    $productType: ProductTypeChoices!,
+    $effort: Float!,
+    $title: String!,
+    $unit: String!
+  ) {
+    newProduct(
+      product: { costPerUnit: $costPerUnit, productType: $productType, effort: $effort, title: $title, unit: $unit }
+    ) {
+      title
+    }
+  }
+`; */
+
+/* const product = {
+  costPerUnit: 1,
+  productType: "SERVICE",  // Must match the enum value exactly
+  effort: 1000,
+  title: "Ramin",
+  unit: "50"
+}; */
+
+/* const [add_product, { data, error }] = useMutation(ADD_PRODUCT);
+console.log(`error`)
+
+  useEffect(() => {
+    add_product({
+      variables: {
+        costPerUnit: product.costPerUnit,
+        productType: product.productType,  // Enum value
+        effort: product.effort,
+        title: product.title,
+        unit: product.unit
+      }
+    });
+  }, [add_product]); */
 
   const { loading, error, data } = useQuery(dog)
-  /* console.log(data) */
+  console.log(data)
 
   useEffect(() => {
     if (data) {
-      /* console.log(data) */
+      console.log(data)
       setReceipts(data.receipts);
     }
   }, [data])
@@ -72,10 +109,10 @@ const Home = () => {
   useEffect(() => {
 
     const filterPosts = (filter) => {
-      if(filter === "Done"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "Done"));
-      }else if( filter === "Cancelled"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "Cancelled"));
+      if(filter === "DONE"){
+        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "DONE"));
+      }else if( filter === "CANCELLED"){
+        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "CANCELLED"));
       }
     }
 
@@ -91,9 +128,9 @@ const Home = () => {
       <div className="Body">
         <div className="filter">
           <span className="filterTitle">Receipts: </span>
-          <div className={filter === "All" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("All")} >All</div>
-          <div className={filter === "Done" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("Done")} >Done</div>
-          <div className={filter === "Cancelled" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("Cancelled")} >Cancelled</div>
+          <div className={filter === "ALL" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("ALL")} >All</div>
+          <div className={filter === "DONE" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("DONE")} >Done</div>
+          <div className={filter === "CANCELLED" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("CANCELLED")} >Cancelled</div>
         </div>
         <div className="CardsContainers">
           {/* {Receipts && Receipts.map(Receipt => (
@@ -101,7 +138,7 @@ const Home = () => {
           ))} */}
 
           {
-            filter === "All" ? Receipts?.map(Receipt => (
+            filter === "ALL" ? Receipts?.map(Receipt => (
               <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt} />
             )) : 
             
@@ -113,7 +150,7 @@ const Home = () => {
 
           {activeCard &&
             <div className='bodyOverlay'>
-              <NewReceiptCard Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
+              <Form Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
             </div>}
         </div>
       </div>

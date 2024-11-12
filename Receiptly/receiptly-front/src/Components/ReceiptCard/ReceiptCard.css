@@ -7,6 +7,7 @@
     padding: 10px;
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.3);
     margin: 0px 25px;
+    position: relative;
 }
 
 .ReceiptCardHeader{
@@ -15,6 +16,37 @@
     height: 40%;
     display: flex;
     align-items: center;
+    margin-top: 10px;
+}
+
+.ReceiptCardStateActive{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 15px;
+    background-color: rgba(175, 181, 74, 0.8);
+    border-radius: 20px 20px 0px 0px;
+}
+
+.ReceiptCardStateCancelled{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 15px;
+    background-color: rgba(181, 74, 74, 0.8);
+    border-radius: 20px 20px 0px 0px;
+}
+
+.ReceiptCardStateDone{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 15px;
+    background-color: rgba(55, 148, 55, 0.8);
+    border-radius: 20px 20px 0px 0px;
 }
 
 .ReceiptCardTitle{
@@ -22,7 +54,7 @@
     width: 65%;
     height: 100%;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 0px 10px;
 }
 
 .ReceiptCardAction{
@@ -36,6 +68,8 @@
     color: rgba(0, 0, 0, 0.402);
     font-weight: bold;
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .ReceiptCardAction{
@@ -77,4 +111,10 @@
     justify-content: center;
     padding: 8px;
     border-radius: 10px;
+}
+
+.DangerIcon {
+    font-size: 1rem;
+    color: red;
+    margin-left: 5px;
 }
