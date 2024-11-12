@@ -41,6 +41,7 @@ class ReceiptType:
     user: "UserType"
     title: auto
     customer_name: auto
+    customer_address: auto
     customer_number: auto
     has_paid: auto
     order_date: auto
