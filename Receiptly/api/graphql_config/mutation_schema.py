@@ -8,7 +8,7 @@ from .input_types import (
     EditReceiptInputType,
     DeleteReceiptInputType,
 )
-from .output_types import ProductType, ReceiptType
+from .output_types import ReceiptType, ResponseType
 from .. import models
 from django.contrib.auth.models import User
 from typing import cast
@@ -25,13 +25,13 @@ class Mutation:
     # --------------- Product mutations ---------------
     # Saves new product
     @sd.mutation
-    def new_product(self, product: NewProductInputType) -> ProductType:
+    def new_product(self, product: NewProductInputType) -> ResponseType:
         product = models.Product.objects.create(user=user, **vars(product))
-        return cast(ProductType, product)
+        return ResponseType(success=True, message="")
 
     # Edits existing product
     @sd.mutation
-    def edit_product(self, edited_product: EditProductInputType) -> ProductType:
+    def edit_product(self, edited_product: EditProductInputType) -> ResponseType:
 
         product = models.Product.objects.get(id=edited_product.id)
         edited_product_dict = vars(edited_product)
@@ -40,16 +40,16 @@ class Mutation:
                 setattr(product, field, value)
         product.save()
 
-        return cast(ProductType, product)
+        return ResponseType(success=True, message="")
 
     # Deletes an existing product
     @sd.mutation
-    def delete_product(self, deleted_product: DeleteProductType) -> bool:
+    def delete_product(self, deleted_product: DeleteProductType) -> ResponseType:
         try:
             models.Product.objects.get(id=deleted_product.id).delete()
-            return True
+            return ResponseType(success=True, message="")
         except models.Product.DoesNotExist:
-            return False
+            return ResponseType(success=False, message="product does not exist")
 
     # --------------- Receipt mutations ---------------
     # Saves new receipt
@@ -65,7 +65,7 @@ class Mutation:
                     "product_count": product.count,
                 },
             )
-        return cast(ReceiptType, receipt)
+            return ResponseType(success=True)
 
     # Edits an existing receipt
     @sd.mutation

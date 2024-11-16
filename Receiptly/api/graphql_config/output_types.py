@@ -41,6 +41,7 @@ class ReceiptType:
     user: "UserType"
     title: auto
     customer_name: auto
+    customer_address: auto
     customer_number: auto
     has_paid: auto
     order_date: auto
@@ -65,3 +66,9 @@ class ReceiptType:
                 )
             )
         return products_list
+
+
+@strawberry.type
+class ResponseType:
+    success: bool
+    message: str | None
