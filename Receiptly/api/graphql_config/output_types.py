@@ -66,3 +66,9 @@ class ReceiptType:
                 )
             )
         return products_list
+
+
+@strawberry.type
+class ResponseType:
+    success: bool
+    message: str | None
