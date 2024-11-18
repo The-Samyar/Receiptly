@@ -49,54 +49,6 @@
     padding: 10px 15px;
 }
 
-.inputContainer{
-    margin-top: 10px;
-    width: 100%;
-    height: 60px;
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.inputLabel{
-    /* font-weight: bold; */
-    font-size: 1rem;
-    margin-bottom: 5px;
-    /* display: flex;
-    align-items: center; */
-}
-
-.inputText{
-    border: 1px solid rgba(0,0,0,0.2);
-    padding: 10px 5px;
-    border-radius: 5px;
-    background-color: rgb(247, 251, 254);
-}
-
-.dabbleInputContainer{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-top: 10px;
-}
-
-.checkBox{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-    /* border: 1px solid red; */
-    margin-top: 10px;
-}
-
-.checkBoxInput{
-    margin-left: 5px;
-    width: 15px;
-    height: 15px;
-    transform: translateY(-2px);
-}
-
 .tableContainer{
     display:block;
     height: 70%;
@@ -188,24 +140,6 @@ th{
     border: 1px solid rgba(0,0,0,0.3);
     margin: 2px 3px;
     padding: 0px 5px;
-}
-
-.buttonsContainer{
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.formButton{
-    background-color: rgb(44, 44, 231);
-    color: rgba(255,255,255,1);
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 10px 20px;
-    width: 20%;
-    border-radius: 5px;
-    border: none;
-    margin-right: 10px;
 }
 
 .ProductsSection{

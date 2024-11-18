@@ -3,12 +3,16 @@ import { useState } from "react";
 import styles from './Form.module.css'
 import { FaCheck, FaWpforms } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
-import {FormStepOne} from './FormStepOne/FormStepOne'
-import {FormStepTwo} from './FormStepTwo/FormStepTwo'
-import {FormStepThree} from './FormStepThree/FormStepThree'
+import { FormStepOne } from './FormStepOne/FormStepOne'
+import { FormStepTwo } from './FormStepTwo/FormStepTwo'
+import { FormStepThree } from './FormStepThree/FormStepThree'
+import { FormProvider } from "../../context/FormContext";
 
 
 export const Form = ({ setActiveCard, Receipt }) => {
+
+    console.log(Receipt)
+
     const CardCallback = (value) => {
         setActiveCard(value);
     }
@@ -30,45 +34,47 @@ export const Form = ({ setActiveCard, Receipt }) => {
                 </div>
             </div>
 
-            <div className={styles.addCardContent}>
-                <div className={styles.stepsIconsContainer}>
-                    <div className={styles.stepProgressBar}>
+            <FormProvider>
+                <div className={styles.addCardContent}>
+                    <div className={styles.stepsIconsContainer}>
+                        <div className={styles.stepProgressBar}>
 
-                        <div className={`${styles.stepPack} ${styles.step1}`}>
-                            <div className={`${styles.stepContainer}`} onClick={() => changeStep(0)}>
-                                <FaWpforms className={`${styles.stepIcon}`} />
+                            <div className={`${styles.stepPack} ${styles.step1}`}>
+                                <div className={`${styles.stepContainer}`} onClick={() => changeStep(0)}>
+                                    <FaWpforms className={`${styles.stepIcon}`} />
+                                </div>
+                                <div className={styles.stepTitle}>Step one</div>
                             </div>
-                            <div className={styles.stepTitle}>Step one</div>
-                        </div>
 
-                        <div className={`${styles.stepPack} ${styles.step2}`} >
-                            <div className={`${styles.stepContainer}`} onClick={() => changeStep(1)}>
-                                <FaListCheck className={`${styles.stepIcon}`} />
+                            <div className={`${styles.stepPack} ${styles.step2}`} >
+                                <div className={`${styles.stepContainer}`} onClick={() => changeStep(1)}>
+                                    <FaListCheck className={`${styles.stepIcon}`} />
+                                </div>
+                                <div className={styles.stepTitle}>Step Two</div>
                             </div>
-                            <div className={styles.stepTitle}>Step Two</div>
-                        </div>
 
-                        <div className={`${styles.stepPack} ${styles.step3}`}>
-                            <div className={`${styles.stepContainer}`} onClick={() => changeStep(2)}>
-                                <FaCheck className={`${styles.stepIcon}`} />
+                            <div className={`${styles.stepPack} ${styles.step3}`}>
+                                <div className={`${styles.stepContainer}`} onClick={() => changeStep(2)}>
+                                    <FaCheck className={`${styles.stepIcon}`} />
+                                </div>
+                                <div className={styles.stepTitle}>Step Three</div>
                             </div>
-                            <div className={styles.stepTitle}>Step Three</div>
                         </div>
                     </div>
-                </div>
 
-                <div className={styles.CardContent}>
-                    {
-                        Step === 0 && <FormStepOne /> 
-                    }
-                    {
-                        Step === 1 && <FormStepTwo /> 
-                    }
-                    {
-                        Step === 2 && <FormStepThree /> 
-                    }
+                    <div className={styles.CardContent}>
+                        {
+                            Step === 0 && <FormStepOne Receipt={Receipt} />
+                        }
+                        {
+                            Step === 1 && <FormStepTwo />
+                        }
+                        {
+                            Step === 2 && <FormStepThree />
+                        }
+                    </div>
                 </div>
-            </div>
+            </FormProvider>
         </div>
     )
 }
