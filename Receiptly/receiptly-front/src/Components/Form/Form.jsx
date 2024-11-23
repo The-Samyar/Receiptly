@@ -67,7 +67,7 @@ export const Form = ({ setActiveCard, Receipt }) => {
                             Step === 0 && <FormStepOne Receipt={Receipt} />
                         }
                         {
-                            Step === 1 && <FormStepTwo />
+                            Step === 1 && <FormStepTwo Receipt={Receipt} />
                         }
                         {
                             Step === 2 && <FormStepThree />
