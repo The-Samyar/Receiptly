@@ -1,14 +1,32 @@
+import { useQuery } from '@apollo/client';
+import { GET_PRODUCTS } from '../../../GraphQL/Product.js';
 import { FaMinus, FaPlus } from 'react-icons/fa'
 import styles from './FormStepTwo.module.css'
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FaCircleArrowLeft } from "react-icons/fa6";
-
-
+import { IoCloseCircleSharp } from "react-icons/io5";
+import { useFormContext } from '../../../context/FormContext';
 
 export const FormStepTwo = ({ Receipt }) => {
 
   const [Products, setProducts] = useState(Receipt?.products);
   const [productsChanged, setProductsChanged] = useState(false);
+  const [AvailableProducts, setAvailableProducts] = useState([]);
+  const [SelectedProducts, setSelectedProducts] = useState([]);
+
+  const { loading, error, data } = useQuery(GET_PRODUCTS)
+  /* const {Data} = useFormContext();
+  console.log(Data) */
+
+  console.log(SelectedProducts)
+  console.log(Products)
+
+  useEffect(() => {
+    console.log(data)
+
+    data?.products && setAvailableProducts(data.products)
+
+  }, [data])
 
   const handleOnClick = (id, action) => {
 
@@ -31,13 +49,52 @@ export const FormStepTwo = ({ Receipt }) => {
     }
   }
 
+  const addProductsToReceipt = () => {
+    const existingProductIds = Products.map((product) => product.productId || product.id);
+
+    // Filter SelectedProducts to only include new products not in Products
+    const newProducts = SelectedProducts.filter(
+      (product) => !existingProductIds.includes(product.id)
+    );
+
+    // Add new products to Products and clear SelectedProducts
+    setProducts((prev) => [...prev, ...newProducts]);
+    setSelectedProducts([]); // Clear selected products
+  };
+
+
+
+  const selectProduct = (e) => {
+    const productId = e.target.id;
+
+    if (e.target.checked) {
+      // Add product to SelectedProducts
+      const product = AvailableProducts.find((AvProduct) => productId === AvProduct.id);
+      setSelectedProducts((prev) => [...prev, product]);
+    } else {
+      // Remove product from SelectedProducts
+      setSelectedProducts((prev) => prev.filter((prod) => prod.id !== productId));
+    }
+  }
+
+  const deleteProduct = (e) => {
+    const productId = e.currentTarget.id; // Always reliable
+
+    const newProducts = Products.filter(
+      (product) => product.productId !== productId && product.id !== productId
+    );
+    setProducts(newProducts);
+  };
+
+
   return (
     <div className={styles.StepTwoContainer}>
-      <FaCircleArrowLeft className={styles.AddIcon} />
+      <FaCircleArrowLeft className={styles.AddIcon} onClick={() => addProductsToReceipt()} />
       <div className={styles.receiptProductsList}>
         <div className={styles.tableContainer}>
           <table className={styles.table}>
             <thead>
+              <th>Action</th>
               <th>Product Name</th>
               <th>Labor</th>
               <th>Price</th>
@@ -49,6 +106,11 @@ export const FormStepTwo = ({ Receipt }) => {
                 Products.map((product) => (
                   product.count !== 0 ?
                     <tr>
+                      <td>
+                        <div className={styles.td}>
+                          <IoCloseCircleSharp onClick={deleteProduct} id={product.productId || product.id} style={{ color: 'red', cursor: 'pointer', width: '20px', height: '20px' }} />
+                        </div>
+                      </td>
                       <td>
                         <div className={styles.tdContent}>
                           {product.title}
@@ -67,7 +129,7 @@ export const FormStepTwo = ({ Receipt }) => {
                       <td>
                         <div className={styles.tdContent}>
                           <FaMinus className={styles.tdContentIcon} onClick={() => handleOnClick(product.productId, 'delete')} />
-                          <input type="text" /* readOnly={!edit} */ value={product.count} name="" id="" className="inputTable" />
+                          <input type="text" /* readOnly={!edit} */ value={product.count} name="" id="" className={styles.inputTable} />
                           <FaPlus className={styles.tdContentIcon} onClick={() => handleOnClick(product.productId, 'add')} />
                         </div>
                       </td>
@@ -84,17 +146,22 @@ export const FormStepTwo = ({ Receipt }) => {
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead>
+                <th width="10%">Action</th>
                 <th>Product Name</th>
                 <th>Labor</th>
                 <th>Price</th>
-                <th>Add product</th>
               </thead>
 
               <tbody>
                 {
-                  Products.map((product) => (
+                  AvailableProducts && AvailableProducts.map((product) => (
                     product.count !== 0 ?
                       <tr>
+                        <td>
+                          <div className={styles.td}>
+                            <input checked={SelectedProducts.some((selected) => selected.id === product.id)} onClick={(e) => selectProduct(e)} className={styles.selectCheckBox} type="checkbox" id={product.id} />
+                          </div>
+                        </td>
                         <td>
                           <div className={styles.tdContent}>
                             {product.title}
@@ -110,13 +177,7 @@ export const FormStepTwo = ({ Receipt }) => {
                             ${product.costPerUnit}
                           </div>
                         </td>
-                        <td>
-                          <div className={styles.tdContent}>
-                            <FaMinus className={styles.tdContentIcon} onClick={() => handleOnClick(product.productId, 'delete')} />
-                            <input type="text" /* readOnly={!edit} */ value={product.count} name="" id="" className="inputTable" />
-                            <FaPlus className={styles.tdContentIcon} onClick={() => handleOnClick(product.productId, 'add')} />
-                          </div>
-                        </td>
+
                       </tr> : null
                   ))
                 }
