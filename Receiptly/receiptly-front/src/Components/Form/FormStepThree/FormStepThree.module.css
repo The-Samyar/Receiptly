@@ -1,0 +1,61 @@
+.StepThreeContainer {
+    width: 100%;
+    height: 90%;
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.ProductsSection{
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.productsContainer{
+    box-sizing: border-box;
+    padding: 10px;
+    height: fit-content;
+    width: 100%;
+    /* border: 1px solid blue; */
+}
+
+.productsInfo{
+    border: 1px solid rgba(0,0,0, 0.5);
+    box-sizing: border-box;
+    padding: 20px;
+    margin: 10px 0px;
+    border-radius: 5px;
+}
+
+.productsInfo p{
+    margin-bottom: 10px;
+}
+
+.productsInfo p:last-child {
+    margin-bottom: 0;
+}
+
+.productsSummary p{
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.buttonsContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* border: 1px solid red; */
+}
+
+.formButton{
+    background-color: rgb(44, 44, 231);
+    color: rgba(255,255,255,1);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 15%;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
