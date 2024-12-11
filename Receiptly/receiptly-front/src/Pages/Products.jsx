@@ -21,11 +21,11 @@ const Products = () => {
 
   `
 
-  const {loading , error , data} = useQuery(Get_Products_Query);
+  const { loading, error, data } = useQuery(Get_Products_Query);
 
   useEffect(() => {
 
-    if(data?.products){
+    if (data?.products) {
       setProducts(data?.products)
     }
 
@@ -39,10 +39,11 @@ const Products = () => {
       <div className="Body">
         <div className="categoryTitle">
           <span className="title">Goods</span>
-          <hr/>
+          <hr />
         </div>
 
         <div className="ProductsContainers">
+          <ProductCard add/>
           {
             products && products.map(product => (
               product?.productType === "GOOD" ? <ProductCard product={product} /> : null

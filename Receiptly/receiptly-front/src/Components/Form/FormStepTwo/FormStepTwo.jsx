@@ -7,9 +7,13 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useFormContext } from '../../../context/FormContext';
 
+const getNoTypeAndIdChanged = (products) => {
+  return products.map(({__typename,productId, ...rest}) => ({id: productId,...rest}))
+}
+
 export const FormStepTwo = ({ Receipt }) => {
 
-  const [Products, setProducts] = useState(Receipt?.products);
+  const [Products, setProducts] = useState(getNoTypeAndIdChanged(Receipt?.products));
   const [productsChanged, setProductsChanged] = useState(false);
   const [AvailableProducts, setAvailableProducts] = useState([]);
   const [SelectedProducts, setSelectedProducts] = useState([]);
@@ -22,8 +26,10 @@ export const FormStepTwo = ({ Receipt }) => {
   console.log(Products) */
 
   useEffect(() => {
-    /* console.log(data) */
-    data?.products && setAvailableProducts(data.products)
+    if(data?.products){
+      const dataWithoutType = getNoTypeAndIdChanged(data?.products)
+      setAvailableProducts(dataWithoutType)
+    }
   }, [data])
 
   useEffect(() => {

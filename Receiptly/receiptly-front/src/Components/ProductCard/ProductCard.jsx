@@ -1,32 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import IMG from '../../Images/test.jpg'
-import './ProductCard.css'
+import Placeholder from '../../Images/placeholder-image.jpg'
+import styles from './ProductCard.module.css'
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product, add }) => {
+
+    const [overlay, setOverlay] = useState(false)
+
+    const addOverlay = () => {
+        add && setOverlay(true)
+    }
+
     return (
-        <div className="cardContainer">
-            <div className="cardHeader">
-                <div className="cardHeaderItem">
-                    <h3 className="cardTitle">{product?.title}</h3>
+        <div className={styles.cardContainer}>
+            <div className={styles.cardHeader}>
+                <div className={styles.cardHeaderItem}>
+                    <h3 className={styles.cardTitle} onClick={() => addOverlay()}>
+                        {!add && product?.title}
+                        {add && "Add New Product"}
+                    </h3>
                 </div>
-                <div className="cardHeaderItem">
-                    <span className="cardItemTitle">Price:</span>
-                    <span className="cardItemValue">${product?.costPerUnit} / number</span>
+                <div className={styles.cardHeaderItem}>
+                    <span className={styles.cardItemTitle}>{!add && "Price:"}</span>
+                    <span className={styles.cardItemValue}>{!add && `$${product?.costPerUnit}  / number`}</span>
                 </div>
-                <div className="cardHeaderItem">
-                    <span className="cardItemTitle">Labor:</span>
-                    <span className="cardItemValue">{product?.effort} hours</span>
+                <div className={styles.cardHeaderItem}>
+                    <span className={styles.cardItemTitle}>{!add && "Labor:"}</span>
+                    <span className={styles.cardItemValue}>{!add && `${product?.effort} hours`}</span>
                 </div>
             </div>
 
-            <div className="cardImg">
-                <img src={IMG} alt="image" />
+            <div className={styles.cardImg}>
+                <img src={add ? Placeholder : IMG} alt="image" />
             </div>
 
-            <div className="cardActions">
-                <button className="editButton">Edit</button>
-                <button className="deleteButton">Delete</button>
+            <div className={styles.cardActions}>
+                {!add && <button className={styles.editButton}>Edit</button>}
+                {!add && <button className={styles.deleteButton}>Delete</button>}
             </div>
+
+            { overlay && <div className="bodyOverlay">
+            </div>}
         </div>
     )
 }
