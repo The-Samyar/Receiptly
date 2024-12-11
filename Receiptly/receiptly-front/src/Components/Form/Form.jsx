@@ -11,10 +11,14 @@ import { useFormContext, FormProvider } from "../../context/FormContext";
 
 export const Form = ({ setActiveCard, Receipt }) => {
 
-    const { Step, goToStep } = useFormContext();
+    const { Step, goToStep, updateData, Data } = useFormContext();
 
     const CardCallback = (value) => {
         setActiveCard(value);
+    }
+
+    if(!Data.id){
+        updateData({id: Receipt.id})
     }
 
     const changeStep = (value) => {

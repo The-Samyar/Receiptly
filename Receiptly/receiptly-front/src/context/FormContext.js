@@ -5,6 +5,7 @@ const FormContext = createContext();
 export const FormProvider = ({children}) => {
     const [Data, setData] = useState({})
     const [Step, setStep] = useState(0)
+    const [isEditing, setIsEditing] = useState(false)
 
     const updateData = (data) => {
         setData(prev => ({...prev , ...data}))
@@ -13,7 +14,7 @@ export const FormProvider = ({children}) => {
     const goToStep = (step) => setStep(step)
 
     return(
-        <FormContext.Provider value={{Data , Step, updateData, goToStep}}>
+        <FormContext.Provider value={{Data , Step, updateData, goToStep, isEditing, setIsEditing}}>
             {children}
         </FormContext.Provider>
     )
