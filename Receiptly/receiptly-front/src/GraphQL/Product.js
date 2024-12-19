@@ -12,3 +12,13 @@ export const GET_PRODUCTS = gql`
     }
 
 `
+
+export const CREATE_PRODUCT = gql`
+
+    mutation newProduct($title: String, $unit: String, $costPerUnit: Int, $productType: ProductTypeChoices!,
+                        $effort: Float){
+                            newProduct(product:{title: $title, unit: $unit, costPerUnit: $costPerUnit, productType: $productType,effort: $effort}){
+                                title
+                            }
+                        }
+`
