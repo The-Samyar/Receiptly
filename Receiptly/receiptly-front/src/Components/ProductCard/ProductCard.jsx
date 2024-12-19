@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import IMG from '../../Images/test.jpg'
 import Placeholder from '../../Images/placeholder-image.jpg'
 import styles from './ProductCard.module.css'
+import { ProductForm } from '../ProductForm/ProductForm'
 
 const ProductCard = ({ product, add }) => {
 
@@ -9,6 +10,10 @@ const ProductCard = ({ product, add }) => {
 
     const addOverlay = () => {
         add && setOverlay(true)
+    }
+
+    const closeModal = () => {
+        setOverlay(false)
     }
 
     return (
@@ -40,6 +45,7 @@ const ProductCard = ({ product, add }) => {
             </div>
 
             { overlay && <div className="bodyOverlay">
+                <ProductForm close={closeModal} />
             </div>}
         </div>
     )
