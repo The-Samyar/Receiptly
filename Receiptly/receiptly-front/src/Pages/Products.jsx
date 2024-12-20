@@ -16,6 +16,7 @@ const Products = () => {
         effort
         costPerUnit
         productType
+        unit
       }
     }
 
@@ -31,7 +32,9 @@ const Products = () => {
 
   }, [data])
 
-  console.log(products)
+  const onDelete = (id) => {
+    setProducts(prev => prev.filter(p => p.id !== id))
+  }
 
   return (
     <>
@@ -46,7 +49,7 @@ const Products = () => {
           <ProductCard add/>
           {
             products && products.map(product => (
-              product?.productType === "GOOD" ? <ProductCard product={product} /> : null
+              product?.productType === "GOOD" ? <ProductCard product={product} onDelete={onDelete} /> : null
             ))
           }
         </div>
