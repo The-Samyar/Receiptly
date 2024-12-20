@@ -3,10 +3,13 @@ import IMG from '../../Images/test.jpg'
 import Placeholder from '../../Images/placeholder-image.jpg'
 import styles from './ProductCard.module.css'
 import { ProductForm } from '../ProductForm/ProductForm'
+import { useMutation } from '@apollo/client'
+import { DELETE_PRODUCT } from '../../GraphQL/Product'
 
-const ProductCard = ({ product, add }) => {
+const ProductCard = ({ product, add, onDelete }) => {
 
     const [overlay, setOverlay] = useState(false)
+    const [deleteProduct, {loading, error}] = useMutation(DELETE_PRODUCT)
 
     const addOverlay = () => {
         add && setOverlay(true)
@@ -14,6 +17,20 @@ const ProductCard = ({ product, add }) => {
 
     const closeModal = () => {
         setOverlay(false)
+    }
+
+    const deleteProductByID = async() => {
+        try {
+            const result = await deleteProduct({variables: {id: product?.id}})
+            if(result?.data){
+                console.log(result)
+                onDelete(product?.id)
+                alert("Successfully deleted the product")
+            }
+
+        } catch (error) {
+           console.log("Error on deleting the product ", error.message) 
+        }
     }
 
     return (
@@ -40,12 +57,12 @@ const ProductCard = ({ product, add }) => {
             </div>
 
             <div className={styles.cardActions}>
-                {!add && <button className={styles.editButton}>Edit</button>}
-                {!add && <button className={styles.deleteButton}>Delete</button>}
+                {!add && <button className={styles.editButton} onClick={() => setOverlay(true)}>Edit</button>}
+                {!add && <button className={styles.deleteButton} onClick={() => deleteProductByID()}>Delete</button>}
             </div>
 
             { overlay && <div className="bodyOverlay">
-                <ProductForm close={closeModal} />
+                <ProductForm close={closeModal} product={!add ? product : null} />
             </div>}
         </div>
     )

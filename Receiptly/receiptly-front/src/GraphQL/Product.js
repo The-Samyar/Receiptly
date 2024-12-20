@@ -7,7 +7,8 @@ export const GET_PRODUCTS = gql`
             id,
             title,
             costPerUnit,
-            effort
+            effort,
+            unit
         }
     }
 
@@ -21,4 +22,21 @@ export const CREATE_PRODUCT = gql`
                                 title
                             }
                         }
+`
+
+export const UPDATE_PRODUCT = gql`
+
+    mutation editProduct($id: ID!, $title: String, $unit: String, $costPerUnit: Int, $productType: ProductTypeChoices, $effort: Float){
+        editProduct(editedProduct: {id: $id, title: $title, unit: $unit, costPerUnit: $costPerUnit, productType: $productType, effort: $effort}){
+            title
+        }
+    }
+
+`
+
+export const DELETE_PRODUCT = gql`
+
+    mutation deleteProduct($id: ID!){
+        deleteProduct(deletedProduct:{id: $id})
+    }
 `
