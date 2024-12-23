@@ -1,5 +1,27 @@
 import { gql } from '@apollo/client';
 
+export const GET_RECEIPTS = gql`
+    query {
+  receipts {
+    id
+    title
+    state
+    customerName
+    customerNumber
+    deadlineDate
+    deadlineNotice
+    hasPaid
+    orderDate
+    products {
+      productId
+      costPerUnit
+      count
+      effort
+      title
+    }
+  }
+}`
+
 export const CHANGE_RECEIPT = gql`
     mutation editReceipt(
         $id: ID!,

@@ -1,28 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Navbar from '../Components/Navbar/Navbar'
 import ProductCard from '../Components/ProductCard/ProductCard'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { GET_PRODUCTS } from '../GraphQL/Product';
+import { Filter } from '../Components/Filter/Filter';
 
 
 const Products = () => {
+  const possibleFilters = ["ALL", "GOOD", "SERVICE"]
+  const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState("ALL");
 
-  const [products, setProducts] = useState();
-
-  const Get_Products_Query = gql`
-    query {
-      products {
-        id
-        title
-        effort
-        costPerUnit
-        productType
-        unit
-      }
-    }
-
-  `
-
-  const { loading, error, data } = useQuery(Get_Products_Query);
+  const filteredProducts = useMemo(() => {
+    return filter === "ALL" ? products : products.filter(product => product.productType === filter)
+  }, [products, filter])
+  
+  const { loading, error, data } = useQuery(GET_PRODUCTS);
 
   useEffect(() => {
 
@@ -36,20 +29,21 @@ const Products = () => {
     setProducts(prev => prev.filter(p => p.id !== id))
   }
 
+  const changeFilter = (filter) => setFilter(filter)
+
+  if(loading) return(<div>Loading...</div>)
+  if(error) return(<div>An error has occurred</div>)
+
   return (
     <>
       <Navbar />
       <div className="Body">
-        <div className="categoryTitle">
-          <span className="title">Goods</span>
-          <hr />
-        </div>
-
+        <Filter options={possibleFilters} activeFilter={filter} changeFilter={changeFilter} title="Products" />
         <div className="ProductsContainers">
-          <ProductCard add/>
+          <ProductCard add />
           {
-            products && products.map(product => (
-              product?.productType === "GOOD" ? <ProductCard product={product} onDelete={onDelete} /> : null
+            filteredProducts.map(product => (
+              <ProductCard product={product} onDelete={onDelete} />
             ))
           }
         </div>
