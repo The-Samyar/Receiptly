@@ -39,14 +39,6 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
         }
     }
 
-    function getSum(total, newValue) {
-        return total + (newValue.count * newValue.costPerUnit)
-    }
-
-    const getEffort = (total, newValue) => {
-        return total + (newValue.effort * newValue.count)
-    }
-
     const handleChange = (e) => {
         setEditReceipt({ ...editReceipt, [e.target.name]: e.target.value })
     }
@@ -84,8 +76,7 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
         }
     }
 
-    var totalCount = Products.reduce(getSum, 0);
-    var totalEffort = Products.reduce(getEffort, 0);
+    
 
     const [edit_receipt, { data, error }] = useMutation(EDIT_RECEIPT);
 
@@ -190,25 +181,6 @@ const NewReceiptCard = ({ setActiveCard, Receipt }) => {
                         <button className="formButton" style={!edit === true ? { backgroundColor: "rgb(138, 166, 233)" } : null} disabled={!edit} onClick={(e) => editData(e)}>Save</button>
                     </div>
                 </form>
-                <div className="ProductsSection">
-                    <div className="productsContainer">
-                        <div className="productsDetail">
-                            <h3 className="productsTitle">Products</h3>
-                            <div className="productsInfo">
-                                {Products.map((item) => (
-                                    item.count !== 0 ?
-                                        <p>{item.count} * {item.title} : ${item.costPerUnit * item.count} (About {item.effort * item.count} hours)</p>
-                                        : null
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="productsSummary">
-                            <p>Total cost: ${totalCount}</p>
-                            <p>Total Effort: {totalEffort} hours</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     )

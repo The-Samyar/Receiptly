@@ -1,156 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import ReceiptCard from '../Components/ReceiptCard/ReceiptCard'
-import NewReceiptCard from '../Components/NewReceiptCard/NewReceiptCard.jsx';
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Form } from '../Components/Form/Form.jsx';
-
+import { FormProvider } from '../context/FormContext.js';
+import { GET_RECEIPTS } from '../GraphQL/Receipt.js'
+import { Filter } from '../Components/Filter/Filter.jsx'
 const Home = () => {
 
-  const possibleFilters = ["ALL" , "CANCELLED" , "DONE"]
+  const possibleFilters = ["ALL", "CANCELLED", "DONE"]
 
   const [activeCard, setActiveCard] = useState(false);
-  const [filter , setFilter] = useState("ALL");
-  const [Receipts, setReceipts] = useState(null);
-  const [filteredPosts, setFilteredPosts] = useState(null);
+  const [filter, setFilter] = useState("ALL");
+  const [receipts, setReceipts] = useState([]);
 
-  const dog = gql`
-    query {
-  receipts {
-    id
-    title
-    state
-    customerName
-    customerNumber
-    deadlineDate
-    deadlineNotice
-    hasPaid
-    orderDate
-    products {
-      productId
-      costPerUnit
-      count
-      effort
-      title
-    }
-  }
-}`
-  
-/* const ADD_PRODUCT = gql`
-  mutation add_product(
-    $costPerUnit: Int!,
-    $productType: ProductTypeChoices!,
-    $effort: Float!,
-    $title: String!,
-    $unit: String!
-  ) {
-    newProduct(
-      product: { costPerUnit: $costPerUnit, productType: $productType, effort: $effort, title: $title, unit: $unit }
-    ) {
-      title
-    }
-  }
-`; */
+  const { loading, error, data } = useQuery(GET_RECEIPTS)
 
-/* const product = {
-  costPerUnit: 1,
-  productType: "SERVICE",  // Must match the enum value exactly
-  effort: 1000,
-  title: "Ramin",
-  unit: "50"
-}; */
+  const filteredPosts = useMemo(() => {
+    return filter === "ALL" ? receipts : receipts.filter(receipt => receipt.state === filter)
+  }, [receipts, filter]) 
 
-/* const [add_product, { data, error }] = useMutation(ADD_PRODUCT);
-console.log(`error`)
-
-  useEffect(() => {
-    add_product({
-      variables: {
-        costPerUnit: product.costPerUnit,
-        productType: product.productType,  // Enum value
-        effort: product.effort,
-        title: product.title,
-        unit: product.unit
-      }
-    });
-  }, [add_product]); */
-
-  const { loading, error, data } = useQuery(dog)
-  console.log(data)
+  console.log(activeCard)
 
   useEffect(() => {
     if (data) {
-      console.log(data)
       setReceipts(data.receipts);
     }
   }, [data])
-
-    console.log(Receipts)
-    console.log(filteredPosts)
 
   const CardCallback = (value) => {
     setActiveCard(value);
   }
 
-  const relevantCard = (id) => {
-    console.log(activeCard)
-    var result = Receipts?.find(receipt => receipt?.id === id);
-    return result;
-  }
+  const relevantReceipt = useMemo(() => {
+    return receipts.find(receipt => receipt?.id === activeCard);
+  }, [receipts, activeCard]);
 
-  const changeFilter = (filter) => {
-    const isFound = possibleFilters.find(possibleFilter => possibleFilter === filter)
+  const changeFilter = (filter) => setFilter(filter)
 
-    if(isFound) {
-      setFilter(filter)
-    }
-  }
-
-  useEffect(() => {
-
-    const filterPosts = (filter) => {
-      if(filter === "DONE"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "DONE"));
-      }else if( filter === "CANCELLED"){
-        setFilteredPosts(Receipts.filter(receipt => receipt?.state === "CANCELLED"));
-      }
-    }
-
-    filterPosts(filter)
-
-  } , [filter , Receipts])
-
-  console.log(filter)
+  if (loading) return (<div>Loading...</div>)
+  if (error) return (<div>An error has occurred</div>)
 
   return (
     <>
       <Navbar />
       <div className="Body">
-        <div className="filter">
-          <span className="filterTitle">Receipts: </span>
-          <div className={filter === "ALL" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("ALL")} >All</div>
-          <div className={filter === "DONE" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("DONE")} >Done</div>
-          <div className={filter === "CANCELLED" ? "activeFilter" : "filterOption"} onClick={() => changeFilter("CANCELLED")} >Cancelled</div>
-        </div>
+        <Filter options={possibleFilters} activeFilter={filter}
+          title="Receipts" changeFilter={changeFilter} />
+
         <div className="CardsContainers">
-          {/* {Receipts && Receipts.map(Receipt => (
-            <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt} />
-          ))} */}
-
           {
-            filter === "ALL" ? Receipts?.map(Receipt => (
-              <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt} />
-            )) : 
-            
-            filteredPosts?.map(Receipt => (
-              <ReceiptCard CardCallBack={CardCallback} Receipt={Receipt} />
+            filteredPosts.map(post => (
+              <ReceiptCard CardCallBack={CardCallback} Receipt={post} />
             ))
-
           }
 
           {activeCard &&
             <div className='bodyOverlay'>
-              <Form Receipt={relevantCard(activeCard)} setActiveCard={setActiveCard} />
+              <FormProvider>
+                <Form Receipt={relevantReceipt} setActiveCard={CardCallback} />
+              </FormProvider>
             </div>}
         </div>
       </div>
