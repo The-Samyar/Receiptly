@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from gqlauth.settings_type import GqlAuthSettings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     "graphene_django",
     "strawberry",
     "api",
+    "strawberry_django",
+    "gqlauth",
 ]
 
 MIDDLEWARE = [
@@ -52,9 +55,23 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "gqlauth.core.middlewares.django_jwt_middleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+GQL_AUTH = GqlAuthSettings(
+    LOGIN_REQUIRE_CAPTCHA=False,
+    REGISTER_REQUIRE_CAPTCHA=False,
+    ALLOW_LOGIN_NOT_VERIFIED=True,
+    SEND_ACTIVATION_EMAIL=False,
+)
 
 ROOT_URLCONF = "Receiptly.urls"
 
