@@ -55,3 +55,24 @@ export const CHANGE_RECEIPT = gql`
         }
     }
 `;
+
+export const ADD_RECEIPT = gql`
+
+    mutation newReceipt($products: [OrderProductsInfoInputType!]!,
+        $title: String,
+        $customerName: String,
+        $customerAddress: String,
+        $customerNumber: String,
+        $hasPaid: Boolean,
+        $orderDate: Date,
+        $deadlineDate: Date,
+        $deadlineNotice: Date,
+        $state: StatusChoices){
+            newReceipt(receiptInput: {products: $products, title: $title, customerName: $customerName,
+                                    customerAddress: $customerAddress, customerNumber: $customerNumber,
+                                    hasPaid: $hasPaid, orderDate: $orderDate, deadlineDate: $deadlineDate,
+                                    deadlineNotice: $deadlineNotice, state: $state}){
+            id
+        }
+    }
+`

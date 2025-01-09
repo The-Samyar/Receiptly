@@ -8,12 +8,12 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { useFormContext } from '../../../context/FormContext';
 
 const getNoTypeAndIdChanged = (products) => {
-  return products.map(({__typename,productId, ...rest}) => ({id: productId,...rest}))
+  return products?.map(({__typename,productId, ...rest}) => ({id: productId,...rest}))
 }
 
 export const FormStepTwo = ({ Receipt }) => {
 
-  const [Products, setProducts] = useState(getNoTypeAndIdChanged(Receipt?.products));
+  const [Products, setProducts] = useState(getNoTypeAndIdChanged(Receipt?.products) || []);
   const [productsChanged, setProductsChanged] = useState(false);
   const [AvailableProducts, setAvailableProducts] = useState([]);
   const [SelectedProducts, setSelectedProducts] = useState([]);
@@ -22,8 +22,8 @@ export const FormStepTwo = ({ Receipt }) => {
   const {Data, goToStep, Step, updateData} = useFormContext();
   console.log(Step)
 
-  /* console.log(SelectedProducts)
-  console.log(Products) */
+  console.log("selected products: " ,SelectedProducts)
+  console.log("Products: ",Products)
 
   useEffect(() => {
     if(data?.products){
@@ -41,8 +41,8 @@ export const FormStepTwo = ({ Receipt }) => {
   const isProductExists = (product) => {
     /* console.log(product)
     console.log(Products) */
-    const existingProductIds = Products.map((product) => product.productId || product.id);
-    const result = existingProductIds.find(singleProduct => singleProduct === product.id)
+    const existingProductIds = Products?.map((product) => product.productId || product.id);
+    const result = existingProductIds?.find(singleProduct => singleProduct === product.id)
     console.log(result)
     return result;
   }
@@ -130,7 +130,7 @@ export const FormStepTwo = ({ Receipt }) => {
 
               <tbody>
                 {
-                  Products.map((product) => (
+                  Products?.map((product) => (
                     product.count !== 0 ?
                       <tr>
                         <td>
