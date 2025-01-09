@@ -6,7 +6,7 @@ authors = ["Samyar <samyar1380@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<3.14"
 requests = "^2.32.3"
 django = "^5.1"
 django-cors-headers = "^4.4.0"
@@ -16,6 +16,7 @@ graphene-django = "^3.2.2"
 strawberry-graphql-django = "^0.48.0"
 django-choices-field = "^2.3.0"
 redis = {extras = ["hiredis"], version = "^5.1.1"}
+strawberry-django-auth = "^0.378.3"
 
 
 [build-system]

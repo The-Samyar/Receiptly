@@ -12,7 +12,7 @@ from .output_types import ReceiptType, ResponseType
 from .. import models
 from django.contrib.auth.models import User
 from typing import cast
-
+from gqlauth.user import arg_mutations as auth_mutations
 
 # -----------------------------------------------------------------------------
 # TODO Check if product belongs to the authenticated user
@@ -101,3 +101,21 @@ class Mutation:
             return True
         except models.Receipt.DoesNotExist:
             return False
+
+    # --------------- Authentication mutations ---------------
+    password_change = auth_mutations.PasswordChange.field
+    token_auth = auth_mutations.ObtainJSONWebToken.field
+    register = auth_mutations.Register.field
+    refresh_token = auth_mutations.RefreshToken.field
+    # verify_token = auth_mutations.VerifyToken.field
+    # update_account = auth_mutations.UpdateAccount.field
+    # archive_account = auth_mutations.ArchiveAccount.field
+    # delete_account = auth_mutations.DeleteAccount.field
+    # swap_emails = auth_mutations.SwapEmails.field
+    # verify_account = auth_mutations.VerifyAccount.field
+    # resend_activation_email = auth_mutations.ResendActivationEmail.field
+    # send_password_reset_email = auth_mutations.SendPasswordResetEmail.field
+    # password_reset = auth_mutations.PasswordReset.field
+    # password_set = auth_mutations.PasswordSet.field
+    # revoke_token = auth_mutations.RevokeToken.field
+    # verify_secondary_email = auth_mutations.VerifySecondaryEmail.field

@@ -1,8 +1,8 @@
-import strawberry
 from .graphql_config import query_schema, mutation_schema
 from strawberry_django.optimizer import DjangoOptimizerExtension
+from gqlauth.core.middlewares import JwtSchema
 
-schema = strawberry.Schema(
+schema = JwtSchema(
     query=query_schema.Query,
     mutation=mutation_schema.Mutation,
     extensions=[

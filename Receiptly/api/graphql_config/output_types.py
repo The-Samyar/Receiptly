@@ -6,7 +6,7 @@ import strawberry
 
 
 @sd.type(model=User)
-class UserType:
+class MyUserType:
     id: auto
     first_name: auto
     last_name: auto
@@ -16,7 +16,7 @@ class UserType:
 @sd.type(model=models.Product)
 class ProductType:
     id: auto
-    user: "UserType"
+    user: "MyUserType"
     title: auto
     unit: auto
     cost_per_unit: auto
@@ -38,7 +38,7 @@ class ReceiptProductInfoType:
 @sd.type(model=models.Receipt)
 class ReceiptType:
     id: auto
-    user: "UserType"
+    user: "MyUserType"
     title: auto
     customer_name: auto
     customer_address: auto
