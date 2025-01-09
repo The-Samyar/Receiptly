@@ -11,7 +11,7 @@ export const FormProvider = ({children}) => {
         setData(prev => ({...prev , ...data}))
     }
 
-    const goToStep = (step) => setStep(step)
+    const goToStep = (step) => {console.log(step); setStep(step)}
 
     return(
         <FormContext.Provider value={{Data , Step, updateData, goToStep, isEditing, setIsEditing}}>
