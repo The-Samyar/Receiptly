@@ -28,9 +28,9 @@ export const FormStepThree = ({ Receipt }) => {
 
   const sendReceipt = async () => {
     const finalData = ExtractCountAndId(products);
-    console.log(products)
+    /* console.log(products)
     console.log(finalData);
-    console.log("Data is :" , {...Data, products: finalData});
+    console.log("Data is :" , {...Data, products: finalData}); */
 
     if (!isNewReceipt) {
       try {
@@ -50,6 +50,7 @@ export const FormStepThree = ({ Receipt }) => {
           }
         });
         console.log(result);
+        alert("Successfully edited receipt")
       } catch (e) {
         console.error("Error sending edited receipt:", e);
       }
@@ -118,6 +119,7 @@ export const FormStepThree = ({ Receipt }) => {
 
       {/* Handle errors */}
       {error && <div className={styles.error}>Error: {error.message}</div>}
+      {addReceiptError && <div className={styles.error}>Error: {addReceiptError.message}</div>}
     </>
   );
 };

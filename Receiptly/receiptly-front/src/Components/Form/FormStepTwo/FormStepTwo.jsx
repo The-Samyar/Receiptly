@@ -19,11 +19,7 @@ export const FormStepTwo = ({ Receipt }) => {
   const [SelectedProducts, setSelectedProducts] = useState([]);
 
   const { loading, error, data } = useQuery(GET_PRODUCTS)
-  const {Data, goToStep, Step, updateData} = useFormContext();
-  console.log(Step)
-
-  console.log("selected products: " ,SelectedProducts)
-  console.log("Products: ",Products)
+  const {Data, goToStep, updateData} = useFormContext();
 
   useEffect(() => {
     if(data?.products){
@@ -39,11 +35,8 @@ export const FormStepTwo = ({ Receipt }) => {
   }, [Data])
 
   const isProductExists = (product) => {
-    /* console.log(product)
-    console.log(Products) */
     const existingProductIds = Products?.map((product) => product.productId || product.id);
     const result = existingProductIds?.find(singleProduct => singleProduct === product.id)
-    console.log(result)
     return result;
   }
 
@@ -61,13 +54,13 @@ export const FormStepTwo = ({ Receipt }) => {
     if (action === 'add') {
       setProducts((prevItems) => (
         prevItems.map(item => (
-          item.productId === id ? { ...item, count: item.count + 1 } : item
+          item.id === id ? { ...item, count: item.count + 1 } : item
         ))
       ))
     } else {
       setProducts((prevItems) => (
         prevItems.map(item => (
-          item.productId === id && item.count > 0 ? { ...item, count: item.count - 1 } : item
+          item.id === id && item.count > 0 ? { ...item, count: item.count - 1 } : item
         ))
       ))
     }
@@ -107,7 +100,7 @@ export const FormStepTwo = ({ Receipt }) => {
     const productId = e.currentTarget.id; // Always reliable
 
     const newProducts = Products.filter(
-      (product) => product.productId !== productId && product.id !== productId
+      (product) => product.id !== productId
     );
     setProducts(newProducts);
   };
@@ -135,7 +128,7 @@ export const FormStepTwo = ({ Receipt }) => {
                       <tr>
                         <td>
                           <div className={styles.td}>
-                            <IoCloseCircleSharp onClick={deleteProduct} id={product.productId || product.id} style={{ color: 'red', cursor: 'pointer', width: '20px', height: '20px' }} />
+                            <IoCloseCircleSharp onClick={deleteProduct} id={product.id} style={{ color: 'red', cursor: 'pointer', width: '20px', height: '20px' }} />
                           </div>
                         </td>
                         <td>
@@ -155,9 +148,9 @@ export const FormStepTwo = ({ Receipt }) => {
                         </td>
                         <td>
                           <div className={styles.tdContent}>
-                            <FaMinus className={styles.tdContentIcon} onClick={() => handleOnClick(product?.productId, 'delete')} />
+                            <FaMinus className={styles.tdContentIcon} onClick={() => handleOnClick(product?.id, 'delete')} />
                             <input type="text" /* readOnly={!edit} */ value={product.count} name="" id="" className={styles.inputTable} />
-                            <FaPlus className={styles.tdContentIcon} onClick={() => handleOnClick(product.productId, 'add')} />
+                            <FaPlus className={styles.tdContentIcon} onClick={() => handleOnClick(product.id, 'add')} />
                           </div>
                         </td>
                       </tr> : null
