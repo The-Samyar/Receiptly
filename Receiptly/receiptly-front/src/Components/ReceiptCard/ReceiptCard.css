@@ -1,6 +1,6 @@
 .ReceiptCardContainer{
     width: 30%;
-    height: 35%;
+    height: 30vh;
     background-color: rgba(255,255,255,1);
     border-radius: 20px;
     box-sizing: border-box;
@@ -117,4 +117,10 @@
     font-size: 1rem;
     color: red;
     margin-left: 5px;
+}
+
+@media (max-width: 767px) {
+    .ReceiptCardContainer{
+        width: 80%;
+    }
 }
