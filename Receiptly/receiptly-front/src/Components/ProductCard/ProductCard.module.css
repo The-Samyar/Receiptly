@@ -82,3 +82,15 @@
     color: rgba(255,255,255,1);
     background-color: rgb(184, 13, 13);
 }
+
+@media (max-width: 767px){
+    .cardContainer{
+        width: 80%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .cardContainer {
+        width: 35%;
+    }
+}
