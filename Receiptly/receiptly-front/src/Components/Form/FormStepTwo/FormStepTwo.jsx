@@ -162,7 +162,7 @@ export const FormStepTwo = ({ Receipt }) => {
         </div>
 
         <div className={styles.availableProductsList}>
-          <div className={styles.receiptProductsList}>
+          {/* <div className={styles.receiptProductsList}> */}
             <div className={styles.tableContainer}>
               <table className={styles.table}>
                 <thead>
@@ -204,7 +204,7 @@ export const FormStepTwo = ({ Receipt }) => {
                 </tbody>
               </table>
             </div>
-          </div>
+          {/* </div> */}
         </div>
 
       </div>

@@ -48,7 +48,7 @@ const Navbar = () => {
             Receiptly
           </a>
 
-          <IoMenu color="#7acccc" style={{width: "30px", height: "30px", cursor: "pointer"}} onClick={() => toggleOpen(true)} />
+          {!isDesktop && <IoMenu color="#7acccc" style={{width: "30px", height: "30px", cursor: "pointer"}} onClick={() => toggleOpen(true)} />}
         </div>
 
         <div className={`navLinks ${isOpen ? "open" : ""}`}>

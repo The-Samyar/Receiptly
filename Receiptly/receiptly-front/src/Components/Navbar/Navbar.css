@@ -100,7 +100,6 @@ header {
 @media (max-width: 768px) {
     .logoContainer{
         width: 100%;
-        border: 1px solid red;
         justify-content: space-around;
     }
     .navLinks {
