@@ -1,0 +1,30 @@
+.singleButtonContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 10%;
+}
+
+.buttonContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 10%;
+}
+
+.formButton{
+    background-color: rgb(44, 44, 231);
+    color: rgba(255,255,255,1);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 20%;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
