@@ -1,9 +1,10 @@
 import '../Navbar/Navbar.css'
-import IMG from '../../Images/test.jpg'
+import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { FormProvider } from '../../context/FormContext'
 import { Form } from '../Form/Form'
 import { IoMenu } from "react-icons/io5";
+import { SignUpIn } from '../../Pages/SignUpIn'
 
 
 const Navbar = () => {
@@ -38,7 +39,7 @@ const Navbar = () => {
   }
 
   const toggleOpen = () => setIsOpen(!isOpen)
-  
+
   return (
 
     <header className="header">
@@ -48,7 +49,7 @@ const Navbar = () => {
             Receiptly
           </a>
 
-          {!isDesktop && <IoMenu color="#7acccc" style={{width: "30px", height: "30px", cursor: "pointer"}} onClick={() => toggleOpen(true)} />}
+          {!isDesktop && <IoMenu color="#7acccc" style={{ width: "30px", height: "30px", cursor: "pointer" }} onClick={() => toggleOpen(true)} />}
         </div>
 
         <div className={`navLinks ${isOpen ? "open" : ""}`}>
@@ -60,8 +61,16 @@ const Navbar = () => {
           </div>
 
           <div className="profileContainer">
-            <button className="SignUp">Sign Up</button>
-            <button className="SignIn">Sign In</button>
+            <button className="SignUp">
+              <Link to="/signUp" style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
+                Sign Up
+              </Link>
+            </button>
+            <button className="SignIn">
+              <Link to="/signIn" style={{ textDecoration: "none", color: "#7acccc" }}>
+                Sign In
+              </Link>
+            </button>
           </div>
         </div>
 

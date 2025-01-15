@@ -6,6 +6,7 @@ import CurrentRecepits from "./Pages/CurrentRecepits";
 import './App.css'
 import client from "./GraphQL/Client";
 import { ApolloProvider } from "@apollo/client";
+import { SignUpIn } from "./Pages/SignUpIn";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/yourProducts" element={<Products />} />
           <Route path="/currentRecepits" element={<CurrentRecepits />} />
+          <Route path="/signUp" element={<SignUpIn />} />
+          <Route path="/signIn" element={<SignUpIn login />} />
         </Routes>
       </div>
     </ApolloProvider>
