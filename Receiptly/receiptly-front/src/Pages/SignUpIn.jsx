@@ -1,12 +1,13 @@
 import Navbar from '../Components/Navbar/Navbar'
-import Sign from '../Components/Sign/Sign'
+import SignIn from '../Components/Sign/SignIn/SignIn'
+import SignUp from '../Components/Sign/SignUp/SignUp'
 export const SignUpIn = ({ login }) => {
     return (
         <>
             <Navbar></Navbar>
             <section className="Body">
                 {
-                    login ? <Sign login /> : <Sign />
+                    login ? <SignIn /> : <SignUp />
                 }
             </section>
         </>
