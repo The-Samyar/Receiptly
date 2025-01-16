@@ -28,3 +28,15 @@
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 767px) {
+    .formButton {
+      width: 25%;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .formButton {
+      width: 30%;
+    }
+  }
