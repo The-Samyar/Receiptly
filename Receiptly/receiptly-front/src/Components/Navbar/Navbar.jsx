@@ -12,6 +12,7 @@ const Navbar = () => {
   const [overlay, setOverlay] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const handleResize = () => {
     console.log(window.innerWidth)
@@ -33,6 +34,11 @@ const Navbar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if(localStorage.getItem("Access"))
+      setIsLoggedIn(true)
+  }, [])
 
   const CardCallback = () => {
     setOverlay(false)
@@ -60,7 +66,7 @@ const Navbar = () => {
             <a href="/history" className="navLink">History</a>
           </div>
 
-          <div className="profileContainer">
+          {!isLoggedIn ? <div className="profileContainer">
             <button className="SignUp">
               <Link to="/signUp" style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
                 Sign Up
@@ -71,7 +77,11 @@ const Navbar = () => {
                 Sign In
               </Link>
             </button>
+          </div> :
+          <div className='profileContainer' style={{color: "#7acccc"}}>
+            Hello Ramin
           </div>
+          }
         </div>
 
         {overlay &&
