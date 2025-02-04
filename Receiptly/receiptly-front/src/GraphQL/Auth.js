@@ -9,6 +9,9 @@ export const LOGIN = gql`
                 token
             }
             errors
+            refreshToken{
+                token
+            }
         }
     }
 
@@ -27,4 +30,17 @@ export const Register = gql`
             }
         }
 
+`
+
+export const REFRESH_TOKEN = gql`
+
+        mutation refreshToken($refreshToken: String!, $revokeRefreshToken: Boolean!){
+            refreshToken(refreshToken: $refreshToken, revokeRefreshToken: $revokeRefreshToken){
+                success
+                errors
+                token{
+                    token
+                }
+            }
+        }
 `

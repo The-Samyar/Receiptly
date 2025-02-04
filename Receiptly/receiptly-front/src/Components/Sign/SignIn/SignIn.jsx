@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from '../../Button/Button';
 import { TextInput } from '../../TextInput/TextInput';
 import styles from '../Sign.module.css';
 import {LOGIN} from '../../../GraphQL/Auth'
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../../../context/AuthContext'
 
 
 const SignIn = () => {
 
     const [user, setUser] = useState({ username: '', password: '' });
     const [tokenAuth, {loading, data, error}] = useMutation(LOGIN);
+    const {setRefreshToken} = useContext(AuthContext)
 
     const inputOnChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -31,10 +33,14 @@ const SignIn = () => {
             })
 
             const data = result.data.tokenAuth
+            /* console.log(data) */
 
             if(data.success){
                 const {token} = data.token
+                const {token: refreshToken} = data.refreshToken
+                /* console.log("access token is", token) */
                 localStorage.setItem('Access', token);
+                setRefreshToken(refreshToken)
                 alert("Successfully logged in")
                 navigate("/")
             }
