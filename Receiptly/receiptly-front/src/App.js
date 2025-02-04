@@ -7,19 +7,22 @@ import './App.css'
 import client from "./GraphQL/Client";
 import { ApolloProvider } from "@apollo/client";
 import { SignUpIn } from "./Pages/SignUpIn";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/yourProducts" element={<Products />} />
-          <Route path="/currentRecepits" element={<CurrentRecepits />} />
-          <Route path="/signUp" element={<SignUpIn />} />
-          <Route path="/signIn" element={<SignUpIn login />} />
-        </Routes>
+        <AuthContextProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/yourProducts" element={<Products />} />
+            <Route path="/currentRecepits" element={<CurrentRecepits />} />
+            <Route path="/signUp" element={<SignUpIn />} />
+            <Route path="/signIn" element={<SignUpIn login />} />
+          </Routes>
+        </AuthContextProvider>
       </div>
     </ApolloProvider>
   );
