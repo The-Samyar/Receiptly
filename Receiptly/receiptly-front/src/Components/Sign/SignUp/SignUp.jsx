@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../../Button/Button';
-import { TextInput } from '../../TextInput/TextInput';
+import TextInput from '../../TextInput/TextInput';
 import styles from '../Sign.module.css';
 const SignUp = () => {
     const [user, setUser] = useState({

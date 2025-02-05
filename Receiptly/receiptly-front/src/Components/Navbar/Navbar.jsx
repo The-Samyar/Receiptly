@@ -15,7 +15,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const handleResize = () => {
-    console.log(window.innerWidth)
+    /* console.log(window.innerWidth) */
     const isNowDesktop = window.innerWidth >= 768;
     setIsDesktop(isNowDesktop);
 

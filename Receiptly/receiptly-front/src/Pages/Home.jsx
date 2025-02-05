@@ -20,7 +20,7 @@ const Home = () => {
     return filter === "ALL" ? receipts : receipts.filter(receipt => receipt.state === filter)
   }, [receipts, filter]) 
 
-  console.log(activeCard)
+/*   console.log(activeCard) */
 
   useEffect(() => {
     if (data) {
