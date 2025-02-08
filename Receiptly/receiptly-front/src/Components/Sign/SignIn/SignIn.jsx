@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Button } from '../../Button/Button';
 import TextInput from '../../TextInput/TextInput';
 import styles from '../Sign.module.css';
@@ -15,18 +15,15 @@ const SignIn = () => {
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().required("Username is required"),
-        password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required")
+        password: Yup.string().required("Password is required").min(6, "Password must be at least 6 characters")
     })
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validationSchema)
     })
+
     const [tokenAuth, { loading, data, error }] = useMutation(LOGIN);
     const { setRefreshToken } = useContext(AuthContext)
-
-    /* const inputOnChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    } */
 
     const navigate = useNavigate()
 
@@ -42,17 +39,18 @@ const SignIn = () => {
                 }
             })
 
-            const responseData = result.data.tokenAuth
-            /* console.log(result) */
+            const responseData = result?.data?.tokenAuth
 
-            if (responseData.success) {
-                const { token } = responseData.token
+            if (responseData?.success) {
+                const { token } = responseData?.token
                 const { token: refreshToken } = responseData.refreshToken
-                /* console.log("access token is", token) */
+
                 localStorage.setItem('Access', token);
                 setRefreshToken(refreshToken)
                 alert("Successfully logged in")
                 navigate("/")
+            }else{
+                console.error(responseData?.errors || "Unknown error")
             }
 
         } catch (error) {
@@ -89,7 +87,7 @@ const SignIn = () => {
                             {errors.password && <div>{errors.password.message}</div>}
                         </div>
 
-                        <Button number={1} titleOne="Sign In" type="submit" /* handlerOne={submitForm} */ />
+                        <Button number={1} titleOne="Sign In" type="submit" disabled={loading} />
                     </div>
                 </div>
             </div>
