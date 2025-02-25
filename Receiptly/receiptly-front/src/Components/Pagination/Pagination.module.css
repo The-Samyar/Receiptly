@@ -1,0 +1,68 @@
+.PaginationContainer {
+    width: 100%;
+    height: 100px;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px 30px;
+}
+
+.PaginationItemsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.PaginationItem {
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 10px;
+    background-color: #fff;
+}
+
+.PaginationGap {
+    width: 50px;
+    /* height: 50px; */
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activeItem {
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 10px;
+    background-color: blue;
+    color: #fff;
+}
+
+.icons {
+    width: 40px;
+    height: 40px;
+    color: grey;
+    border: 2px solid black;
+    border-radius: 7px;
+    margin-right: 20px;
+    cursor: pointer;
+    background-color: #fff;
+}

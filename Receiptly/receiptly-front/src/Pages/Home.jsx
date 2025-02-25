@@ -6,9 +6,11 @@ import { Form } from '../Components/Form/Form.jsx';
 import { FormProvider } from '../context/FormContext.js';
 import { GET_RECEIPTS } from '../GraphQL/Receipt.js'
 import { Filter } from '../Components/Filter/Filter.jsx'
+import { Pagination } from '../Components/Pagination/Pagination.jsx';
 const Home = () => {
 
   const possibleFilters = ["ALL", "CANCELLED", "DONE"]
+  const numberOfItems = 6;
 
   const [activeCard, setActiveCard] = useState(false);
   const [filter, setFilter] = useState("ALL");
@@ -18,9 +20,9 @@ const Home = () => {
 
   const filteredPosts = useMemo(() => {
     return filter === "ALL" ? receipts : receipts.filter(receipt => receipt.state === filter)
-  }, [receipts, filter]) 
+  }, [receipts, filter])
 
-/*   console.log(activeCard) */
+  /*   console.log(activeCard) */
 
   useEffect(() => {
     if (data) {
@@ -50,7 +52,7 @@ const Home = () => {
 
         <div className="CardsContainers">
           {
-            filteredPosts.map(post => (
+            filteredPosts.slice(0, 6).map(post => (
               <ReceiptCard CardCallBack={CardCallback} Receipt={post} />
             ))
           }
@@ -62,6 +64,9 @@ const Home = () => {
               </FormProvider>
             </div>}
         </div>
+
+        <Pagination numberOfItems={/* filteredPosts?.length */ 400}
+          numberOfItemsPerPage={/* numberOfItems */ 10} />
       </div>
     </>
   )
