@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styles from './Pagination.module.css'
 import { MdSkipPrevious } from "react-icons/md";
 import { MdSkipNext } from "react-icons/md";
 
 export const Pagination = ({ numberOfItemsPerPage = 0, numberOfItems = 0 }) => {
 
-    const [activePage, setActivePage] = useState(4);
+    const [activePage, setActivePage] = useState(1);
     const numberOfPages = Math.ceil(numberOfItems / numberOfItemsPerPage);
-    const numberOfVisiblePages = 7
 
-    if (numberOfPages <= 1) return null; // No need to show pagination if only 1 page exists
+    if (numberOfPages <= 1) return null;
 
     const goToPage = (page) => {
         if (page >= 1 && page <= numberOfPages) setActivePage(page);
@@ -60,21 +59,33 @@ export const Pagination = ({ numberOfItemsPerPage = 0, numberOfItems = 0 }) => {
         <div className={styles.PaginationContainer}>
             <div className={styles.PaginationItemsContainer}>
                 <div>
-                    <MdSkipPrevious className={styles.icons} onClick={() => goToPage(Number(activePage) - 1)} />
+                    <button data-testid="Prev"
+                        className={styles.button}
+                        onClick={() => goToPage(Number(activePage) - 1)}
+                        disabled={activePage === 1}
+                    >
+                        <MdSkipPrevious className={styles.icons} />
+                    </button>
                 </div>
                 {
                     generatePages().map(page => {
                         return (
-                            <div className={Number(activePage) === page ? styles.activeItem : styles.PaginationItem}
+                            <button className={Number(activePage) === page ? styles.activeItem : styles.PaginationItem}
                                 onClick={page !== "..." ? () => goToPage(page) : null}
                             >
                                 {page}
-                            </div>
+                            </button>
                         )
                     })
                 }
                 <div>
-                    <MdSkipNext className={styles.icons} onClick={() => goToPage(Number(activePage) + 1)} />
+                    <button data-testid="Next"
+                        className={styles.button}
+                        onClick={() => goToPage(Number(activePage) + 1)}
+                        disabled={activePage === numberOfPages}
+                    >
+                        <MdSkipNext className={styles.icons} />
+                    </button>
                 </div>
             </div>
         </div>

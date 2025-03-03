@@ -65,8 +65,8 @@ const Home = () => {
             </div>}
         </div>
 
-        <Pagination numberOfItems={/* filteredPosts?.length */ 400}
-          numberOfItemsPerPage={/* numberOfItems */ 10} />
+        <Pagination numberOfItems={/* filteredPosts?.length */ 50}
+          numberOfItemsPerPage={10} />
       </div>
     </>
   )
