@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from gqlauth.settings_type import GqlAuthSettings
+from strawberry.types.field import StrawberryField
+from strawberry.annotation import StrawberryAnnotation
+from typing import Optional
+import datetime
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -67,10 +72,22 @@ AUTHENTICATION_BACKENDS = [
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 GQL_AUTH = GqlAuthSettings(
+    ALLOW_LOGIN_NOT_VERIFIED=True,
     LOGIN_REQUIRE_CAPTCHA=False,
     REGISTER_REQUIRE_CAPTCHA=False,
-    ALLOW_LOGIN_NOT_VERIFIED=True,
     SEND_ACTIVATION_EMAIL=False,
+    REGISTER_MUTATION_FIELDS={
+        StrawberryField(
+            "first_name", type_annotation=StrawberryAnnotation(Optional[str])
+        ),
+        StrawberryField(
+            "last_name", type_annotation=StrawberryAnnotation(Optional[str])
+        ),
+        StrawberryField(
+            "username", type_annotation=StrawberryAnnotation(Optional[str])
+        ),
+    },
+    JWT_EXPIRATION_DELTA=datetime.timedelta(hours=1),
 )
 
 ROOT_URLCONF = "Receiptly.urls"
